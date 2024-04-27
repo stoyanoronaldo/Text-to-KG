@@ -1,17 +1,15 @@
 import openai
 
-def generate_question_and_get_answer(text):
-    question = "For the givem text provide all concepts and relations between them. \
-                Present the result in turtle format using Rdfs schema, schema.org and example.org for the enteties.\nText: " \
-                + text
-
+def chat_with_chatgpt(prompt, model="gpt-3.5-turbo"):
     response = openai.Completion.create(
-        engine="text-davinci-002",
-        prompt=question,
-        max_tokens=50,
-        temperature=0.7
+        engine=model,
+        prompt=prompt,
+        max_tokens=100,
+        n=1,
+        stop=None,
+        temperature=0.5,
     )
 
-    answer = response['choices'][0]['text'].strip()
-    return answer
+    message = response.choices[0].text.strip()
+    return message
 
