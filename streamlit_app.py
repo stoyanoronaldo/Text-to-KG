@@ -2,6 +2,8 @@ import os
 import streamlit as st
 from openai import OpenAI
 
+print(os.environ.get("OPENAI_API_KEY"))
+
 client = OpenAI(
     api_key=os.environ.get("OPENAI_API_KEY"),
 )
@@ -9,7 +11,7 @@ client = OpenAI(
 st.title("Text to KG")
 
 user_text = st.text_input("Enter some text:")
-question =  question = "For the givem text provide all concepts and relations between them. \
+question = "For the givem text provide all concepts and relations between them. \
                 Present the result in turtle format using Rdfs schema, schema.org and example.org for the enteties.\nText: "                
 
 
