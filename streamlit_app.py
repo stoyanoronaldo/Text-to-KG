@@ -17,7 +17,7 @@ if st.button("Get Answer"):
     if user_text:
         chat_completion = client.chat.completions.create(
             messages=question + user_text,
-            model="gpt-3.5-turbo",
+            model="gpt-3.5",
             temperature=0,
             top_p=1,
             frequency_penalty=0,    
