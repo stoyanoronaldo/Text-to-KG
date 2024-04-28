@@ -1,1 +1,1 @@
-openai==1.23.6
+poe_api_wrapper==1.4.1

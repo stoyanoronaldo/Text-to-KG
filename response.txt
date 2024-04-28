@@ -1,0 +1,122 @@
+Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+
+```
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix example: <http://example.org/> .
+
+example:StarWars
+  a schema:MediaFranchise ;
+  rdfs:label "Star Wars" ;
+  schema:creator example:GeorgeLucas ;
+  schema:description "an American epic space opera media franchise" ;
+  schema:startDate "1977" ;
+  schema:genre schema:SpaceOpera .
+
+example:GeorgeLucas
+  a schema:Person ;
+  rdfs:label "George Lucas" ;
+  schema:role schema:Creator .
+
+example:EpisodeIV_ANewHope
+  a schema:Movie ;
+  rdfs:label "Episode IV: A New Hope" ;
+  schema:releaseDate "1977" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeV_TheEmpireStrikesBack
+  a schema:Movie ;
+  rdfs:label "Episode V: The Empire Strikes Back" ;
+  schema:releaseDate "1980" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeVI_ReturnOfTheJedi
+  a schema:Movie ;
+  rdfs:label "Episode VI: Return of the Jedi" ;
+  schema:releaseDate "1983" ;
+  schema:partOf example:StarWars .
+
+example:OriginalStarWarsTrilogy
+  a schema:MovieSeries ;
+  rdfs:label "Original Star Wars Trilogy" ;
+  schema:hasPart example:EpisodeIV_ANewHope ;
+  schema:hasPart example:EpisodeV_TheEmpireStrikesBack ;
+  schema:hasPart example:EpisodeVI_ReturnOfTheJedi .
+
+example:EpisodeI_ThePhantomMenace
+  a schema:Movie ;
+  rdfs:label "Episode I: The Phantom Menace" ;
+  schema:releaseDate "1999" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeII_AttackOfTheClones
+  a schema:Movie ;
+  rdfs:label "Episode II: Attack of the Clones" ;
+  schema:releaseDate "2002" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeIII_RevengeOfTheSith
+  a schema:Movie ;
+  rdfs:label "Episode III: Revenge of the Sith" ;
+  schema:releaseDate "2005" ;
+  schema:partOf example:StarWars .
+
+example:PrequelTrilogy
+  a schema:MovieSeries ;
+  rdfs:label "Prequel Trilogy" ;
+  schema:hasPart example:EpisodeI_ThePhantomMenace ;
+  schema:hasPart example:EpisodeII_AttackOfTheClones ;
+  schema:hasPart example:EpisodeIII_RevengeOfTheSith .
+
+example:EpisodeVII_TheForceAwakens
+  a schema:Movie ;
+  rdfs:label "Episode VII: The Force Awakens" ;
+  schema:releaseDate "2015" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeVIII_TheLastJedi
+  a schema:Movie ;
+  rdfs:label "Episode VIII: The Last Jedi" ;
+  schema:releaseDate "2017" ;
+  schema:partOf example:StarWars .
+
+example:EpisodeIX_TheRiseOfSkywalker
+  a schema:Movie ;
+  rdfs:label "Episode IX: The Rise of Skywalker" ;
+  schema:releaseDate "2019" ;
+  schema:partOf example:StarWars .
+
+example:SequelTrilogy
+  a schema:MovieSeries ;
+  rdfs:label "Sequel Trilogy" ;
+  schema:hasPart example:EpisodeVII_TheForceAwakens ;
+  schema:hasPart example:EpisodeVIII_TheLastJedi ;
+  schema:hasPart example:EpisodeIX_TheRiseOfSkywalker .
+
+example:SkywalkerSaga
+  a schema:MovieSeries ;
+  rdfs:label "Skywalker Saga" ;
+  schema:hasPart example:OriginalStarWarsTrilogy ;
+  schema:hasPart example:PrequelTrilogy ;
+  schema:hasPart example:SequelTrilogy .
+
+example:RogueOne
+  a schema:Movie ;
+  rdfs:label "Rogue One" ;
+  schema:releaseDate "2016" ;
+  schema:partOf example:StarWars .
+
+example:Solo
+  a schema:Movie ;
+  rdfs:label "Solo" ;
+  schema:releaseDate "2018" ;
+  schema:partOf example:StarWars .
+
+example:Disney
+  a schema:Organization ;
+  rdfs:label "Disney" ;
+  schema:acquired example:StarWars.
+```
+
+Note that I've used the `example.org` namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your data. Also, I've used the `schema.org` vocabulary to describe the entities and their relationships, but you can use other vocabularies like `rdf` or `owl` if needed.

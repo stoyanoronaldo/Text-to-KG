@@ -1,28 +1,70 @@
 import os
+from functions import *
 import streamlit as st
-from openai import OpenAI
+import streamlit_agraph
+from streamlit_agraph import Config
+from poe_api_wrapper import PoeApi
 
 
-client = OpenAI(
-    api_key=os.environ.get('OPENAI_API_KEY'),
+st.set_page_config(
+    page_title="Text to KG",
+    page_icon="🧊",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
+def page1():
 
-st.title("Text to KG")
+    comment = """tokens = {
+            'b': 'os.environ.get("POE_B")',
+            'lat': 'os.environ.get("POE_LAT")'
+        }
 
-user_text = st.text_input("Enter some text:")
-question = "For the givem text provide all concepts and relations between them. \
-                Present the result in turtle format using Rdfs schema, schema.org and example.org for the enteties.\nText: "
+    client = PoeApi(cookie=tokens)
 
-if st.button("Get Answer"):
-    if user_text:
-        chat_completion = client.chat.completions.create(
-            messages=question + user_text,
-            model="davinci-002",
-            temperature=0,
-            top_p=1,
-            frequency_penalty=0,    
-            presence_penalty=0
-        )
-        st.write("Answer:", chat_completion.choices[0].message.content)
-    else:
-        st.write("Please enter some text.")
+    bot = 'assistant'"""
+
+    user_text = st.text_area(label=" ", placeholder="Enter some text",height=150)
+    comment = """
+    task = "For the given text provide all concepts and relations between them. \
+                    Present the result in turtle format using Rdfs schema, schema.org and example.org for the enteties.\nText: "
+    question = user_text + task
+    """
+
+    get_answer_buuton = st.button("Get Answer")
+
+    if get_answer_buuton:
+        if user_text:
+            comment = """
+            for chunk in client.send_message(bot, question, chatId=449287219):
+                pass
+            save_answer_to_file(chunk["text"])
+            st.write(get_answer(chunk["text"]))
+            """
+            answer = get_answer_from_file('response.txt')
+            st.code(answer, language="turtle")
+        else:
+            st.write("Please enter some text.")
+
+def page2():
+    answer = get_answer_from_file('response.txt')
+    config = Config(height=550,
+		        width=1200, 
+                nodeHighlightBehavior=True,
+                highlightColor="#F7A7A6", 
+                directed=True,
+                physics=True, 
+                hierarchical=False, 
+                collapsible=True)
+
+    nodes, edges = build_graph(answer)
+
+    streamlit_agraph.agraph(nodes=nodes, edges=edges, config=config)
+
+
+page_options = ["Graph generation", "Graph view"]
+page_selection = st.sidebar.radio(" ", page_options)
+
+if page_selection == "Graph generation":
+    page1()
+elif page_selection == "Graph view":
+    page2()
