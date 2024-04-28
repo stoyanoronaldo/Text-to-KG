@@ -2,7 +2,7 @@ import os
 from functions import *
 import streamlit as st
 import streamlit_agraph
-from streamlit_agraph import Config
+from streamlit_agraph import Config, ConfigBuilder
 from poe_api_wrapper import PoeApi
 
 
@@ -52,7 +52,7 @@ def page2():
                 nodeHighlightBehavior=True,
                 highlightColor="#F7A7A6", 
                 directed=True,
-                physics=True, 
+                physics=False, 
                 hierarchical=False, 
                 collapsible=True)
 
