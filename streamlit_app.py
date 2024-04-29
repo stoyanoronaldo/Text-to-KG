@@ -14,33 +14,30 @@ st.set_page_config(
 )
 def page1():
 
-    comment = """tokens = {
+    tokens = {
             'b': 'os.environ.get("POE_B")',
             'lat': 'os.environ.get("POE_LAT")'
         }
 
     client = PoeApi(cookie=tokens)
 
-    bot = 'assistant'"""
+    bot = 'llama-3-70B-T'
 
     user_text = st.text_area(label=" ", placeholder="Enter some text",height=150)
-    comment = """
-    task = "For the given text provide all concepts and relations between them. \
-                    Present the result in turtle format using Rdfs schema, schema.org and example.org for the enteties.\nText: "
-    question = user_text + task
-    """
+    task = """For the given text provide all concepts and relations between them in turtle format using 
+            Rdfs schema, schema.org and example.org for the enteties.\nText: """
+    question = task + user_text
 
     get_answer_buuton = st.button("Get Answer")
 
     if get_answer_buuton:
         if user_text:
-            comment = """
-            for chunk in client.send_message(bot, question, chatId=449287219):
+            for chunk in client.send_message(bot, question):
                 pass
             save_answer_to_file(chunk["text"])
-            st.write(get_answer(chunk["text"]))
-            """
-            answer = get_answer_from_file('response.txt')
+            answer = get_answer_from_string(chunk["text"])
+            st.write(answer)
+            comment = """answer = get_answer_from_file('response.txt')"""
             st.code(answer, language="turtle")
         else:
             st.write("Please enter some text.")
