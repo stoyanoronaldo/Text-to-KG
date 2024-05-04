@@ -1,0 +1,106 @@
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <http://schema.org/> .
+@prefix example: <http://example.org/> .
+
+example:StarWars
+  a schema:MediaFranchise ;
+  rdfs:label "Star Wars" ;
+  schema:creator example:GeorgeLucas ;
+  schema:description "American epic space opera media franchise" ;
+  schema:startDate "1977" ;
+  schema:genre schema:SpaceOpera .
+
+example:GeorgeLucas
+  a schema:Person ;
+  rdfs:label "George Lucas" ;
+  schema:occupation schema:FilmDirector, schema:Screenwriter .
+
+example:EpisodeIV_ANewHope
+  a schema:Movie ;
+  rdfs:label "Episode IV: A New Hope" ;
+  schema:releaseDate "1977" ;
+  schema:partOf example:StarWars ;
+  schema:sequel example:EpisodeV_TheEmpireStrikesBack .
+
+example:EpisodeV_TheEmpireStrikesBack
+  a schema:Movie ;
+  rdfs:label "Episode V: The Empire Strikes Back" ;
+  schema:releaseDate "1980" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeIV_ANewHope ;
+  schema:sequel example:EpisodeVI_ReturnOfTheJedi .
+
+example:EpisodeVI_ReturnOfTheJedi
+  a schema:Movie ;
+  rdfs:label "Episode VI: Return of the Jedi" ;
+  schema:releaseDate "1983" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeV_TheEmpireStrikesBack .
+
+example:EpisodeI_ThePhantomMenace
+  a schema:Movie ;
+  rdfs:label "Episode I: The Phantom Menace" ;
+  schema:releaseDate "1999" ;
+  schema:partOf example:StarWars ;
+  schema:sequel example:EpisodeII_AttackOfTheClones .
+
+example:EpisodeII_AttackOfTheClones
+  a schema:Movie ;
+  rdfs:label "Episode II: Attack of the Clones" ;
+  schema:releaseDate "2002" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeI_ThePhantomMenace ;
+  schema:sequel example:EpisodeIII_RevengeOfTheSith .
+
+example:EpisodeIII_RevengeOfTheSith
+  a schema:Movie ;
+  rdfs:label "Episode III: Revenge of the Sith" ;
+  schema:releaseDate "2005" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeII_AttackOfTheClones .
+
+example:EpisodeVII_TheForceAwakens
+  a schema:Movie ;
+  rdfs:label "Episode VII: The Force Awakens" ;
+  schema:releaseDate "2015" ;
+  schema:partOf example:StarWars ;
+  schema:sequel example:EpisodeVIII_TheLastJedi .
+
+example:EpisodeVIII_TheLastJedi
+  a schema:Movie ;
+  rdfs:label "Episode VIII: The Last Jedi" ;
+  schema:releaseDate "2017" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeVII_TheForceAwakens ;
+  schema:sequel example:EpisodeIX_TheRiseOfSkywalker .
+
+example:EpisodeIX_TheRiseOfSkywalker
+  a schema:Movie ;
+  rdfs:label "Episode IX: The Rise of Skywalker" ;
+  schema:releaseDate "2019" ;
+  schema:partOf example:StarWars ;
+  schema:prequel example:EpisodeVIII_TheLastJedi .
+
+example:RogueOne
+  a schema:Movie ;
+  rdfs:label "Rogue One" ;
+  schema:releaseDate "2016" ;
+  schema:partOf example:StarWars .
+
+example:Solo
+  a schema:Movie ;
+  rdfs:label "Solo" ;
+  schema:releaseDate "2018" ;
+  schema:partOf example:StarWars .
+
+example:Disney
+  a schema:Organization ;
+  rdfs:label "Disney" ;
+  schema:acquired example:Lucasfilm .
+
+example:Lucasfilm
+  a schema:Organization ;
+  rdfs:label "Lucasfilm" ;
+  schema:ownedBy example:GeorgeLucas ;
+  schema:soldTo example:Disney .
