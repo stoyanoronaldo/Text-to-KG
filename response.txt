@@ -6,107 +6,96 @@ Here is the representation of the concepts and relations between them in Turtle 
 @prefix schema: <http://schema.org/> .
 @prefix example: <http://example.org/> .
 
-example:StarWars
-  a schema:MediaFranchise ;
-  rdfs:label "Star Wars" ;
-  schema:creator example:GeorgeLucas ;
-  schema:description "American epic space opera media franchise" ;
-  schema:startDate "1977" ;
-  schema:genre schema:SpaceOpera .
+example:HarryPotter a schema:MovieSeries ;
+    rdfs :label "Harry Potter" ;
+    schema:creator example:JKRowling ;
+    schema:productionCompany example:WarnerBrosPictures ;
+    schema:hasPart example:HarryPotterAndThePhilosophersStone, 
+                     example:HarryPotterAndTheDeathlyHallowsPart2, 
+                     example:FantasticBeastsAndWhereToFindThem ;
+    schema:genre schema:Fantasy .
 
-example:GeorgeLucas
-  a schema:Person ;
-  rdfs:label "George Lucas" ;
-  schema:occupation schema:FilmDirector, schema:Screenwriter .
+example:JKRowling a schema:Person ;
+    rdfs :label "J. K. Rowling" ;
+    schema:nationality schema:British .
 
-example:EpisodeIV_ANewHope
-  a schema:Movie ;
-  rdfs:label "Episode IV: A New Hope" ;
-  schema:releaseDate "1977" ;
-  schema:partOf example:StarWars ;
-  schema:sequel example:EpisodeV_TheEmpireStrikesBack .
+example:WarnerBrosPictures a schema:Organization ;
+    rdfs:label "Warner Bros. Pictures" .
 
-example:EpisodeV_TheEmpireStrikesBack
-  a schema:Movie ;
-  rdfs:label "Episode V: The Empire Strikes Back" ;
-  schema:releaseDate "1980" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeIV_ANewHope ;
-  schema:sequel example:EpisodeVI_ReturnOfTheJedi .
+example :HarryPotterAndThePhilosophersStone a schema:Movie ;
+    rdfs:label "Harry Potter and the Philosopher's Stone" ;
+    schema:releaseDate "2001" .
 
-example:EpisodeVI_ReturnOfTheJedi
-  a schema:Movie ;
-  rdfs:label "Episode VI: Return of the Jedi" ;
-  schema:releaseDate "1983" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeV_TheEmpireStrikesBack .
+example:HarryPotterAndTheDeathlyHallowsPart2 a schema:Movie ;
+    rdfs:label "Harry Potter and the Deathly Hallows � Part 2" ;
+    schema:releaseDate "2011" ;
+    schema:boxOfficeGross 1000000000 .
 
-example:EpisodeI_ThePhantomMenace
-  a schema:Movie ;
-  rdfs:label "Episode I: The Phantom Menace" ;
-  schema:releaseDate "1999" ;
-  schema:partOf example:StarWars ;
-  schema:sequel example:EpisodeII_AttackOfTheClones .
+example:FantasticBeastsAndWhereToFindThem a schema:Movie ;
+    rdfs:label "Fantastic Beasts and Where to Find Them" ;
+    schema:releaseDate "2016" .
 
-example:EpisodeII_AttackOfTheClones
-  a schema:Movie ;
-  rdfs:label "Episode II: Attack of the Clones" ;
-  schema:releaseDate "2002" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeI_ThePhantomMenace ;
-  schema:sequel example:EpisodeIII_RevengeOfTheSith .
+example:DavidHeyman a schema:Person ;
+    rdfs:label "David Heyman" ;
+    schema:role schema:Producer ;
+    schema:workedOn example:HarryPotter .
 
-example:EpisodeIII_RevengeOfTheSith
-  a schema:Movie ;
-  rdfs:label "Episode III: Revenge of the Sith" ;
-  schema:releaseDate "2005" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeII_AttackOfTheClones .
+example:DanielRadcliffe a schema:Person ;
+    rdfs:label "Daniel Radcliffe" ;
+    schema:role schema:Actor ;
+    schema:playedCharacter example:HarryPotterCharacter .
 
-example:EpisodeVII_TheForceAwakens
-  a schema:Movie ;
-  rdfs:label "Episode VII: The Force Awakens" ;
-  schema:releaseDate "2015" ;
-  schema:partOf example:StarWars ;
-  schema:sequel example:EpisodeVIII_TheLastJedi .
+example:RupertGrint a schema:Person ;
+    rdfs:label "Rupert Grint" ;
+    schema:role schema:Actor ;
+    schema:playedCharacter example:RonWeasleyCharacter .
 
-example:EpisodeVIII_TheLastJedi
-  a schema:Movie ;
-  rdfs:label "Episode VIII: The Last Jedi" ;
-  schema:releaseDate "2017" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeVII_TheForceAwakens ;
-  schema:sequel example:EpisodeIX_TheRiseOfSkywalker .
+example:EmmaWatson a schema:Person ;
+    rdfs:label "Emma Watson" ;
+    schema:role schema:Actor ;
+    schema:playedCharacter example:HermioneGrangerCharacter .
 
-example:EpisodeIX_TheRiseOfSkywalker
-  a schema:Movie ;
-  rdfs:label "Episode IX: The Rise of Skywalker" ;
-  schema:releaseDate "2019" ;
-  schema:partOf example:StarWars ;
-  schema:prequel example:EpisodeVIII_TheLastJedi .
+example:ChrisColumbus a schema:Person ;
+    rdfs:label "Chris Columbus" ;
+    schema:role schema:Director ;
+    schema:workedOn example:HarryPotter .
 
-example:RogueOne
-  a schema:Movie ;
-  rdfs:label "Rogue One" ;
-  schema:releaseDate "2016" ;
-  schema:partOf example:StarWars .
+example:AlfonsoCuar�n a schema:Person ;
+    rdfs:label "Alfonso Cuar�n" ;
+    schema:role schema:Director ;
+    schema:workedOn example:HarryPotter .
 
-example:Solo
-  a schema:Movie ;
-  rdfs:label "Solo" ;
-  schema:releaseDate "2018" ;
-  schema:partOf example:StarWars .
+example:MikeNewell a schema:Person ;
+    rdfs:label "Mike Newell" ;
+    schema:role schema:Director ;
+    schema:workedOn example:HarryPotter .
 
-example:Disney
-  a schema:Organization ;
-  rdfs:label "Disney" ;
-  schema:acquired example:Lucasfilm .
+example:DavidYates a schema:Person ;
+    rdfs:label "David Yates" ;
+    schema:role schema:Director ;
+    schema:workedOn example:HarryPotter .
 
-example:Lucasfilm
-  a schema:Organization ;
-  rdfs:label "Lucasfilm" ;
-  schema:ownedBy example:GeorgeLucas ;
-  schema:soldTo example:Disney .
+example:MichaelGoldenberg a schema:Person ;
+    rdfs:label "Michael Goldenberg" ;
+    schema:role schema:Screenwriter ;
+    schema:workedOn example:HarryPotterAndTheOrderOfThePhoenix .
+
+example:SteveKloves a schema:Person ;
+    rdfs:label "Steve Kloves" ;
+    schema:role schema:Screenwriter ;
+    schema:workedOn example:HarryPotter .
+
+example:HarryPotterCharacter a schema:Character ;
+    rdfs:label "Harry Potter" .
+
+example:RonWeasleyCharacter a schema:Character ;
+    rdfs:label "Ron Weasley" .
+
+example:HermioneGrangerCharacter a schema:Character ;
+    rdfs:label "Hermione Granger" .
+
+example:LordVoldemort a schema:Character ;
+    rdfs:label "Lord Voldemort" .
 ```
 
-Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace, such as `starwars.org` or `lucasfilm.org`.
+Note: I've used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace, such as `dbpedia.org` or `wikidata.org`, depending on the context.

@@ -10,6 +10,8 @@ loop = get_or_create_event_loop()
 # Now you can safely import poe_api_wrapper
 from poe_api_wrapper import PoeApi
 
+chat_bot_is_on = False
+answer = ""
 
 st.set_page_config(
     page_title="Text to KG",
@@ -48,7 +50,7 @@ if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
 
-    comment = """tokens = {
+    tokens = {
             'b': os.environ.get("POE_B"),
             'lat': os.environ.get("POE_LAT")
         }
@@ -57,10 +59,17 @@ if st.session_state.page_num == 1:
 
     bot = 'llama-3-70B-T'
 
-    
-    task = '''For the given text provide all concepts and relations between them in turtle format using \
-            Rdfs schema, schema.org and example.org for the enteties.\nText: '''
-    question = task + user_text"""
+    schema_options = st.radio(
+        "Choose which schema to use:",
+        ("schema.org", "schema1", "schema2"),
+        horizontal=True
+    )
+
+    task = f'For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties.\nText: '
+
+    print(task)
+    question = task + user_text
+
     col1, col2= st.columns([0.15, 0.85])
 
     with col1:
@@ -80,11 +89,17 @@ if st.session_state.page_num == 1:
                 st.session_state.validate_turtle = True
     
     if st.session_state.validate_turtle:
-        comment = """for chunk in client.send_message(bot, question):
-                    pass
-                save_answer_to_file(chunk["text"])
-                answer = get_answer_from_string(chunk["text"])"""
-        answer = get_answer_from_file('response.txt')
+
+        if chat_bot_is_on:
+            for chunk in client.send_message(bot, question):
+                pass
+            save_answer_to_file(chunk["text"], 'response.txt')
+            answer = get_answer_from_string(chunk["text"])
+        else:
+            answer = get_answer_from_file('response.txt')
+
+        if st.session_state.answer:
+            answer = st.session_state.answer
     
         is_valid_ttl, is_valid_string = is_valid_turtle(answer)
 
@@ -96,11 +111,15 @@ if st.session_state.page_num == 1:
             st.session_state.answer = answer
         else:
             st.write(f"<font color='red'>{is_valid_string}</font>", unsafe_allow_html=True)
-
-        st.session_state.validate_turtle = False
-        st.session_state.get_answer = False
+            answer = fix_uris_string(answer)
+            answer = fix_turtle_syntax_string(answer)
+            save_answer_to_file(answer, 'test.ttl')
+            st.session_state.answer = answer
+            st.write("<font color='green'>Trying to fix the error</font>", unsafe_allow_html=True) 
 
 elif st.session_state.page_num == 2:
+    st.session_state.validate_turtle = False
+    st.session_state.get_answer = False
     if st.session_state.is_valid_turtle:
         answer = st.session_state.answer
         config = Config(height=550,

@@ -29,9 +29,7 @@ def get_answer_from_string(str):
 
     return extracted_text
 
-def save_answer_to_file(answer):
-    file_path = 'response.txt'
-
+def save_answer_to_file(answer, file_path):
     with open(file_path, 'w') as file:
         file.write(answer)
 
@@ -63,6 +61,16 @@ def fix_turtle_syntax(file_path):
 
     print(f"Fixed syntax in {file_path}")
 
+def fix_turtle_syntax_string(input_string):
+    # Fix common Turtle syntax issues
+    # Ensure proper spacing around colons
+    fixed_string = re.sub(r'\s*\:\s*', ':', input_string)
+
+    # Ensure quotes are properly closed
+    #fixed_string = re.sub(r'\"([^\"]*)\"', r'"\1"', fixed_string)
+
+    return fixed_string
+
 def fix_uris(file_path):
     with open(file_path, 'r', encoding='utf-8') as file:
         content = file.read()
@@ -77,6 +85,14 @@ def fix_uris(file_path):
         file.write(content)
 
     print(f"URIs fixed in {file_path}")
+
+def fix_uris_string(input_string):
+    # Remove line breaks within URIs
+    fixed_string = re.sub(r'http://www \.\n\s*w3 \.\n\s*org/', 'http://www.w3.org/', input_string)
+    fixed_string = re.sub(r'http://schema \.\n\s*org/', 'http://schema.org/', fixed_string)
+    fixed_string = re.sub(r'http://example \.\n\s*org/', 'http://example.org/', fixed_string)
+
+    return fixed_string
 
 def build_graph(ttl_string):
     g = Graph()
