@@ -1,101 +1,137 @@
 Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
-@prefix example: <http://example.org/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
+@prefix schema: <http://schema.org/>.
+@prefix example: <http://example.org/>.
 
-example:HarryPotter a schema:MovieSeries ;
-    rdfs :label "Harry Potter" ;
-    schema:creator example:JKRowling ;
-    schema:productionCompany example:WarnerBrosPictures ;
-    schema:hasPart example:HarryPotterAndThePhilosophersStone, 
-                     example:HarryPotterAndTheDeathlyHallowsPart2, 
-                     example:FantasticBeastsAndWhereToFindThem ;
-    schema:genre schema:Fantasy .
+example:StarTrek a schema:MediaFranchise ;
+    rdfs:label "Star Trek" ;
+    schema:creator example:GeneRoddenberry ;
+    schema:description "An American science fiction media franchise".
 
-example:JKRowling a schema:Person ;
-    rdfs :label "J. K. Rowling" ;
-    schema:nationality schema:British .
+example:GeneRoddenberry a schema:Person ;
+    rdfs:label "Gene Roddenberry" ;
+    schema:birthDate "1921-08-19" ;
+    schema:deathDate "1991-10-24".
 
-example:WarnerBrosPictures a schema:Organization ;
-    rdfs:label "Warner Bros. Pictures" .
+example:StarTrekTheOriginalSeries a schema:TVSeries ;
+    rdfs:label "Star Trek: The Original Series" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "1966-09-08" ;
+    schema:endDate "1969-06-03" ;
+    schema:network example:NBC.
 
-example :HarryPotterAndThePhilosophersStone a schema:Movie ;
-    rdfs:label "Harry Potter and the Philosopher's Stone" ;
-    schema:releaseDate "2001" .
+example:NBC a schema:TelevisionNetwork ;
+    rdfs:label "NBC".
 
-example:HarryPotterAndTheDeathlyHallowsPart2 a schema:Movie ;
-    rdfs:label "Harry Potter and the Deathly Hallows � Part 2" ;
-    schema:releaseDate "2011" ;
-    schema:boxOfficeGross 1000000000 .
+example:CTV a schema:TelevisionNetwork ;
+    rdfs:label "CTV".
 
-example:FantasticBeastsAndWhereToFindThem a schema:Movie ;
-    rdfs:label "Fantastic Beasts and Where to Find Them" ;
-    schema:releaseDate "2016" .
+example:USS Enterprise a schema:Spacecraft ;
+    rdfs:label "USS Enterprise" ;
+    schema:partOf example:UnitedFederationOfPlanets.
 
-example:DavidHeyman a schema:Person ;
-    rdfs:label "David Heyman" ;
-    schema:role schema:Producer ;
-    schema:workedOn example:HarryPotter .
+example:UnitedFederationOfPlanets a schema:Organization ;
+    rdfs:label "United Federation of Planets".
 
-example:DanielRadcliffe a schema:Person ;
-    rdfs:label "Daniel Radcliffe" ;
-    schema:role schema:Actor ;
-    schema:playedCharacter example:HarryPotterCharacter .
+example:HoratioHornblowerSeries a schema:BookSeries ;
+    rdfs:label "Horatio Hornblower series" ;
+    schema:author example:CSForester.
 
-example:RupertGrint a schema:Person ;
-    rdfs:label "Rupert Grint" ;
-    schema:role schema:Actor ;
-    schema:playedCharacter example:RonWeasleyCharacter .
+example:CSForester a schema:Person ;
+    rdfs:label "C. S. Forester".
 
-example:EmmaWatson a schema:Person ;
-    rdfs:label "Emma Watson" ;
-    schema:role schema:Actor ;
-    schema:playedCharacter example:HermioneGrangerCharacter .
+example:GulliverTravels a schema:Book ;
+    rdfs:label "Gulliver's Travels" ;
+    schema:author example:JonathanSwift.
 
-example:ChrisColumbus a schema:Person ;
-    rdfs:label "Chris Columbus" ;
-    schema:role schema:Director ;
-    schema:workedOn example:HarryPotter .
+example:JonathanSwift a schema:Person ;
+    rdfs:label "Jonathan Swift".
 
-example:AlfonsoCuar�n a schema:Person ;
-    rdfs:label "Alfonso Cuar�n" ;
-    schema:role schema:Director ;
-    schema:workedOn example:HarryPotter .
+example:ForbiddenPlanet a schema:Movie ;
+    rdfs:label "Forbidden Planet" ;
+    schema:releaseDate "1956".
 
-example:MikeNewell a schema:Person ;
-    rdfs:label "Mike Newell" ;
-    schema:role schema:Director ;
-    schema:workedOn example:HarryPotter .
+example:WagonTrain a schema:TVSeries ;
+    rdfs:label "Wagon Train".
 
-example:DavidYates a schema:Person ;
-    rdfs:label "David Yates" ;
-    schema:role schema:Director ;
-    schema:workedOn example:HarryPotter .
+example:StarTrekTheAnimatedSeries a schema:TVSeries ;
+    rdfs:label "Star Trek: The Animated Series" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "1973-09-08" ;
+    schema:endDate "1974-10-12".
 
-example:MichaelGoldenberg a schema:Person ;
-    rdfs:label "Michael Goldenberg" ;
-    schema:role schema:Screenwriter ;
-    schema:workedOn example:HarryPotterAndTheOrderOfThePhoenix .
+example:StarTrekFilmFranchise a schema:MovieSeries ;
+    rdfs:label "Star Trek film franchise" ;
+    schema:partOf example:StarTrek.
 
-example:SteveKloves a schema:Person ;
-    rdfs:label "Steve Kloves" ;
-    schema:role schema:Screenwriter ;
-    schema:workedOn example:HarryPotter .
+example:StarTrekTheNextGeneration a schema:TVSeries ;
+    rdfs:label "Star Trek: The Next Generation" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "1987-09-28" ;
+    schema:endDate "1994-05-23".
 
-example:HarryPotterCharacter a schema:Character ;
-    rdfs:label "Harry Potter" .
+example:DeepSpaceNine a schema:TVSeries ;
+    rdfs:label "Star Trek: Deep Space Nine" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "1993-01-03" ;
+    schema:endDate "1999-06-02".
 
-example:RonWeasleyCharacter a schema:Character ;
-    rdfs:label "Ron Weasley" .
+example:Voyager a schema:TVSeries ;
+    rdfs:label "Star Trek: Voyager" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "1995-01-16" ;
+    schema:endDate "2001-05-23".
 
-example:HermioneGrangerCharacter a schema:Character ;
-    rdfs:label "Hermione Granger" .
+example:Enterprise a schema:TVSeries ;
+    rdfs:label "Star Trek: Enterprise" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2001-09-26" ;
+    schema:endDate "2005-05-23".
 
-example:LordVoldemort a schema:Character ;
-    rdfs:label "Lord Voldemort" .
+example:KelvinTimeline a schema:AlternateUniverse ;
+    rdfs:label "Kelvin timeline" ;
+    schema:partOf example:StarTrek.
+
+example:StarTrekDiscovery a schema:TVSeries ;
+    rdfs:label "Star Trek: Discovery" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2017-09-24".
+
+example:StarTrekPicard a schema:TVSeries ;
+    rdfs:label "Star Trek: Picard" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2020-01-23".
+
+example:StarTrekShortTreks a schema:TVSeries ;
+    rdfs:label "Star Trek: Short Treks" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2018-10-04".
+
+example:StarTrekLowerDecks a schema:TVSeries ;
+    rdfs:label "Star Trek: Lower Decks" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2020-08-06".
+
+example:StarTrekProdigy a schema:TVSeries ;
+    rdfs:label "Star Trek: Prodigy" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2021-10-28".
+
+example:StarTrekStrangeNewWorlds a schema:TVSeries ;
+    rdfs:label "Star Trek: Strange New Worlds" ;
+    schema:partOf example:StarTrek ;
+    schema:startDate "2022-05-05".
+
+example:Trekkies a schema:FanBase ;
+    rdfs:label "Trekkies" ;
+    schema:subjectOf example:StarTrek.
+
+example:Klingon a schema:ConstructedLanguage ;
+    rdfs:label "Klingon" ;
+    schema:partOf example:StarTrek.
 ```
 
-Note: I've used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace, such as `dbpedia.org` or `wikidata.org`, depending on the context.
+Note: This representation is not exhaustive, and some entities and relations may be missing. Additionally, some dates and other information may not be accurate.

@@ -49,9 +49,10 @@ def fix_turtle_syntax(file_path):
 
     # Fix common Turtle syntax issues
     # Ensure proper spacing around semicolons and periods
-    #content = re.sub(r'\s*;\s*', ' ; ', content)
+    #content = re.sub(r'\s*;\s*', ' ;\n', content)
     #content = re.sub(r'\s*\.\s*', ' .\n', content)
     content = re.sub(r'\s*\:\s*', ':', content)
+    content = re.sub(r'(example:[^\s]+)\s([^\s]+) (a schema:)', r'\1_\2 \3', content, flags=re.MULTILINE)
 
     # Ensure quotes are properly closed
     #content = re.sub(r'\"([^\"]*)\"', r'"\1"', content)
