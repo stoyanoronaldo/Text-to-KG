@@ -66,8 +66,7 @@ if st.session_state.page_num == 1:
     )
 
     task = f'For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties.\nText: '
-
-    print(task)
+    
     question = task + user_text
 
     col1, col2= st.columns([0.15, 0.85])
