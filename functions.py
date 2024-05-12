@@ -1,4 +1,4 @@
-from rdflib import Graph, URIRef
+from rdflib import Graph, URIRef, BNode
 from streamlit_agraph import Node, Edge, TripleStore
 import re
 import asyncio
@@ -105,10 +105,10 @@ def build_graph(ttl_string):
 
 
     for subject, predicate, object in g:
-        if str(subject) not in made_nodes:
+        if str(subject) not in made_nodes and not isinstance(subject, BNode):
             nodes.append(Node(id=str(subject), size=20, label=str(subject).split("/")[-1], title=str(subject)))
             made_nodes.add(str(subject))
-        if isinstance(object, URIRef) and str(object) not in made_nodes:
+        if isinstance(object, URIRef) and str(object) not in made_nodes and not isinstance(object, BNode):
             nodes.append(Node(id=str(object), size=20, label=str(object).split("/")[-1], title=str(object)))
             made_nodes.add(str(object))
         if isinstance(object, URIRef):
