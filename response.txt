@@ -1,134 +1,63 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
-@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>.
-@prefix schema: <http://schema.org/>.
-@prefix example: <http://example.org/>.
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema: <https://schema.org/> .
+@prefix example: <https://example.org/> .
 
-example:PremierLeague a schema:SportsLeague ;
-    rdfs:label "Premier League" ;
-    schema:description "The highest level of the English football league system" ;
-    schema:leagueSystem example:EnglishFootballLeagueSystem ;
-    schema:numClubs 20 ;
-    schema:promotionRelegation example:EnglishFootballLeague.
+example:TwoAndAHalfMen a schema:TVSeries ;
+    rdfs:label "Two and a Half Men" ;
+    schema:creator [ a schema:Person ;
+        rdfs:label "Chuck Lorre" ;
+        schema:role "Creator" ] ;
+    schema:creator [ a schema:Person ;
+        rdfs:label "Lee Aronsohn" ;
+        schema:role "Creator" ] ;
+    schema:startDate "2003-09-22" ;
+    schema:endDate "2015-02-19" ;
+    schema:numberOfSeasons 12 ;
+    schema:numberOfEpisodes 262 .
 
-example:EnglishFootballLeagueSystem a schema:LeagueSystem ;
-    rdfs:label "English football league system".
+example:CharlieSheen a schema:Person ;
+    rdfs:label "Charlie Sheen" ;
+    schema:role "Actor" ;
+    schema:character [ a schema:Character ;
+        rdfs:label "Charlie Harper" ] .
 
-example:EnglishFootballLeague a schema:SportsLeague ;
-    rdfs:label "English Football League" ;
-    schema:abbreviation "EFL".
+example:JonCryer a schema:Person ;
+    rdfs:label "Jon Cryer" ;
+    schema:role "Actor" ;
+    schema:character [ a schema:Character ;
+        rdfs:label "Alan Harper" ] .
 
-example:FA a schema:Organization ;
-    rdfs:label "The Football Association".
+example:AngusTJones a schema:Person ;
+    rdfs:label "Angus T. Jones" ;
+    schema:role "Actor" ;
+    schema:character [ a schema:Character ;
+        rdfs:label "Jake Harper" ] .
 
-example:FirstDivision a schema:SportsLeague ;
-    rdfs:label "First Division" ;
-    schema:topTierLeague true ;
-    schema:activeYears "1888-1992".
+example:AshtonKutcher a schema:Person ;
+    rdfs:label "Ashton Kutcher" ;
+    schema:role "Actor" ;
+    schema:character [ a schema:Character ;
+        rdfs:label "Walden Schmidt" ] .
 
-example:PremierLeagueSeason a schema:SportsSeason ;
-    rdfs:label "Premier League season" ;
-    schema:startDate "August" ;
-    schema:endDate "May" ;
-    schema:numMatches 38 ;
-    schema:matchSchedule [
-        a schema:Schedule ;
-        schema:dayOfWeek schema:Saturday, schema:Sunday ;
-        schema:startTime "afternoon" ;
-        schema:occasionalStartTime "weekday evening"
-    ].
+example:CBS a schema:Organization ;
+    rdfs:label "CBS" ;
+    schema:role "Broadcaster" .
 
-example:TVRightsDeal a schema:MediaRightsDeal ;
-    rdfs:label "TV rights deal" ;
-    schema:value " 5 billion" ;
-    schema:duration "3 years" ;
-    schema:broadcaster example:Sky, example:BTGroup ;
-    schema:numGames 128, 32.
+example:WarnerBrosTelevision a schema:Organization ;
+    rdfs:label "Warner Bros. Television" ;
+    schema:role "Producer" .
 
-example:Sky a schema:Organization ;
-    rdfs:label "Sky".
+example:ChuckLorre a schema:Person ;
+    rdfs:label "Chuck Lorre" ;
+    schema:role "Executive Producer" .
 
-example:BTGroup a schema:Organization ;
-    rdfs:label "BT Group".
-
-example:ChiefExecutive a schema:Person ;
-    rdfs:label "Chief Executive" ;
-    schema:role "CEO" ;
-    schema:organization example:PremierLeague.
-
-example:Club a schema:SportsTeam ;
-    rdfs:label "Club" ;
-    schema:memberOf example:PremierLeague ;
-    schema:shareholder true.
-
-example:CentralPaymentRevenue a schema:MonetaryAmount ;
-    rdfs:label "Central payment revenue" ;
-    schema:value " 2.4 billion" ;
-    schema:year "2016-2017".
-
-example:SolidarityPayment a schema:MonetaryAmount ;
-    rdfs:label "Solidarity payment" ;
-    schema:value " 343 million" ;
-    schema:year "2016-2017" ;
-    schema:recipient example:EFLClubs.
-
-example:EFLClubs a schema:SportsTeam ;
-    rdfs:label "EFL clubs".
-
-example:TVBroadcast a schema:BroadcastEvent ;
-    rdfs:label "TV broadcast" ;
-    schema:numTerritories 212 ;
-    schema:numHomes 643000000 ;
-    schema:potentialAudience 4700000000.
-
-example:MatchAttendance a schema:EventAttendance ;
-    rdfs:label "Match attendance" ;
-    schema:averageAttendance 38181 ;
-    schema:season "2018-2019".
-
-example:UEFACoefficientRanking a schema:Ranking ;
-    rdfs:label "UEFA coefficient ranking" ;
-    schema:rank 1 ;
-    schema:year "2023".
-
-example:EuropeanCup a schema:Trophy ;
-    rdfs:label "European Cup".
-
-example:UEFAChampionsLeague a schema:Trophy ;
-    rdfs:label "UEFA Champions League".
-
-example:ManchesterUnited a schema:SportsTeam ;
-    rdfs:label "Manchester United" ;
-    schema:numTitles 13.
-
-example:ManchesterCity a schema:SportsTeam ;
-    rdfs:label "Manchester City" ;
-    schema:numTitles 7.
-
-example:Chelsea a schema:SportsTeam ;
-    rdfs:label "Chelsea" ;
-    schema:numTitles 5.
-
-example:Arsenal a schema:SportsTeam ;
-    rdfs:label "Arsenal" ;
-    schema:numTitles 3.
-
-example:BlackburnRovers a schema:SportsTeam ;
-    rdfs:label "Blackburn Rovers" ;
-    schema:numTitles 1.
-
-example:LeicesterCity a schema:SportsTeam ;
-    rdfs:label "Leicester City" ;
-    schema:numTitles 1.
-
-example:Liverpool a schema:SportsTeam ;
-    rdfs:label "Liverpool" ;
-    schema:numTitles 1.
-
-example:TottenhamHotspur a schema:SportsTeam ;
-    rdfs:label "Tottenham Hotspur".
+example:OfCourseHesDead a schema:Episode ;
+    rdfs:label "Of Course He's Dead" ;
+    schema:partOf <https://example.org/TwoAndAHalfMen> .
 ```
 
-Note: I've used example.org as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your data. Also, I've only included the most relevant concepts and relations from the text, and omitted some details for brevity.
+Note: I used `example.org` as the namespace for the entities, but you can replace it with your own namespace if needed.

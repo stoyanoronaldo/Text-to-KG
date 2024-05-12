@@ -1,131 +1,124 @@
-@prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#>.
-@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#>.
-@prefix schema:<http://schema.org/>.
-@prefix example:<http://example.org/>.
+@prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
+@prefix schema:<http://schema.org/> .
+@prefix example:<http://example.org/> .
 
-example:StarTrek a schema:MediaFranchise ;
-    rdfs:label "Star Trek" ;
-    schema:creator example:GeneRoddenberry ;
-    schema:description "An American science fiction media franchise".
+example:PremierLeague a schema:SportsLeague ;
+    rdfs:label "Premier League" ;
+    schema:description "The highest level of the English football league system" ;
+    schema:memberOf example:EnglishFootballLeagueSystem .
 
-example:GeneRoddenberry a schema:Person ;
-    rdfs:label "Gene Roddenberry" ;
-    schema:birthDate "1921-08-19" ;
-    schema:deathDate "1991-10-24".
+example:EnglishFootballLeagueSystem a schema:SportsLeagueSystem ;
+    rdfs:label "English Football League System" .
 
-example:StarTrekTheOriginalSeries a schema:TVSeries ;
-    rdfs:label "Star Trek:The Original Series" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "1966-09-08" ;
-    schema:endDate "1969-06-03" ;
-    schema:network example:NBC.
+example:EnglishFootballLeague a schema:SportsLeague ;
+    rdfs:label "English Football League" ;
+    schema:memberOf example:EnglishFootballLeagueSystem .
 
-example:NBC a schema:TelevisionNetwork ;
-    rdfs:label "NBC".
+example:EFL a schema:SportsLeague ;
+    rdfs:label "English Football League" ;
+    schema:memberOf example:EnglishFootballLeagueSystem .
 
-example:CTV a schema:TelevisionNetwork ;
-    rdfs:label "CTV".
+example:FA a schema:SportsOrganization ;
+    rdfs:label "Football Association" .
 
-example:USS_Enterprise a schema:Spacecraft ;
-    rdfs:label "USS Enterprise" ;
-    schema:partOf example:UnitedFederationOfPlanets.
+example:FirstDivision a schema:SportsLeague ;
+    rdfs:label "First Division" ;
+    schema:memberOf example:EnglishFootballLeagueSystem .
 
-example:UnitedFederationOfPlanets a schema:Organization ;
-    rdfs:label "United Federation of Planets".
+example:PremierLeagueClubs a schema:SportsTeam ;
+    rdfs:label "Premier League Clubs" ;
+    schema:memberOf example:PremierLeague .
 
-example:HoratioHornblowerSeries a schema:BookSeries ;
-    rdfs:label "Horatio Hornblower series" ;
-    schema:author example:CSForester.
+example:ManchesterUnited a schema:SportsTeam ;
+    rdfs:label "Manchester United" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:CSForester a schema:Person ;
-    rdfs:label "C. S. Forester".
+example:ManchesterCity a schema:SportsTeam ;
+    rdfs:label "Manchester City" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:GulliverTravels a schema:Book ;
-    rdfs:label "Gulliver's Travels" ;
-    schema:author example:JonathanSwift.
+example:Chelsea a schema:SportsTeam ;
+    rdfs:label "Chelsea" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:JonathanSwift a schema:Person ;
-    rdfs:label "Jonathan Swift".
+example:Arsenal a schema:SportsTeam ;
+    rdfs:label "Arsenal" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:ForbiddenPlanet a schema:Movie ;
-    rdfs:label "Forbidden Planet" ;
-    schema:releaseDate "1956".
+example:BlackburnRovers a schema:SportsTeam ;
+    rdfs:label "Blackburn Rovers" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:WagonTrain a schema:TVSeries ;
-    rdfs:label "Wagon Train".
+example:LeicesterCity a schema:SportsTeam ;
+    rdfs:label "Leicester City" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:StarTrekTheAnimatedSeries a schema:TVSeries ;
-    rdfs:label "Star Trek:The Animated Series" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "1973-09-08" ;
-    schema:endDate "1974-10-12".
+example:Liverpool a schema:SportsTeam ;
+    rdfs:label "Liverpool" ;
+    schema:memberOf example:PremierLeagueClubs .
 
-example:StarTrekFilmFranchise a schema:MovieSeries ;
-    rdfs:label "Star Trek film franchise" ;
-    schema:partOf example:StarTrek.
+example:Sky a schema:Organization ;
+    rdfs:label "Sky" .
 
-example:StarTrekTheNextGeneration a schema:TVSeries ;
-    rdfs:label "Star Trek:The Next Generation" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "1987-09-28" ;
-    schema:endDate "1994-05-23".
+example:BTGroup a schema:Organization ;
+    rdfs:label "BT Group" .
 
-example:DeepSpaceNine a schema:TVSeries ;
-    rdfs:label "Star Trek:Deep Space Nine" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "1993-01-03" ;
-    schema:endDate "1999-06-02".
+example:UEFA a schema:SportsOrganization ;
+    rdfs:label "Union of European Football Associations" .
 
-example:Voyager a schema:TVSeries ;
-    rdfs:label "Star Trek:Voyager" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "1995-01-16" ;
-    schema:endDate "2001-05-23".
+example:LaLiga a schema:SportsLeague ;
+    rdfs:label "La Liga" ;
+    schema:memberOf example:SpanishFootballLeagueSystem .
 
-example:Enterprise a schema:TVSeries ;
-    rdfs:label "Star Trek:Enterprise" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2001-09-26" ;
-    schema:endDate "2005-05-23".
+example:Bundesliga a schema:SportsLeague ;
+    rdfs:label "Bundesliga" ;
+    schema:memberOf example:GermanFootballLeagueSystem .
 
-example:KelvinTimeline a schema:AlternateUniverse ;
-    rdfs:label "Kelvin timeline" ;
-    schema:partOf example:StarTrek.
+example:EuropeanCup a schema:SportsTournament ;
+    rdfs:label "European Cup" .
 
-example:StarTrekDiscovery a schema:TVSeries ;
-    rdfs:label "Star Trek:Discovery" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2017-09-24".
+example:UEFAChampionsLeague a schema:SportsTournament ;
+    rdfs:label "UEFA Champions League" .
 
-example:StarTrekPicard a schema:TVSeries ;
-    rdfs:label "Star Trek:Picard" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2020-01-23".
+example:EnglishTopFlight a schema:SportsLeague ;
+    rdfs:label "English Top-Flight" ;
+    schema:memberOf example:EnglishFootballLeagueSystem .
 
-example:StarTrekShortTreks a schema:TVSeries ;
-    rdfs:label "Star Trek:Short Treks" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2018-10-04".
+example:Wales a schema:Country ;
+    rdfs:label "Wales" .
 
-example:StarTrekLowerDecks a schema:TVSeries ;
-    rdfs:label "Star Trek:Lower Decks" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2020-08-06".
+example:England a schema:Country ;
+    rdfs:label "England" .
 
-example:StarTrekProdigy a schema:TVSeries ;
-    rdfs:label "Star Trek:Prodigy" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2021-10-28".
+example:August a schema:Month ;
+    rdfs:label "August" .
 
-example:StarTrekStrangeNewWorlds a schema:TVSeries ;
-    rdfs:label "Star Trek:Strange New Worlds" ;
-    schema:partOf example:StarTrek ;
-    schema:startDate "2022-05-05".
+example:May a schema:Month ;
+    rdfs:label "May" .
 
-example:Trekkies a schema:FanBase ;
-    rdfs:label "Trekkies" ;
-    schema:subjectOf example:StarTrek.
+example:Saturday a schema:DayOfWeek ;
+    rdfs:label "Saturday" .
 
-example:Klingon a schema:ConstructedLanguage ;
-    rdfs:label "Klingon" ;
-    schema:partOf example:StarTrek.
+example:Sunday a schema:DayOfWeek ;
+    rdfs:label "Sunday" .
+
+example:Weekday a schema:DayOfWeek ;
+    rdfs:label "Weekday" .
+
+example:Evening a schema:TimeOfDay ;
+    rdfs:label "Evening" .
+
+example:TelevisionRights a schema:Rights ;
+    rdfs:label "Television Rights" .
+
+example:CentralPaymentRevenues a schema:FinancialTransaction ;
+    rdfs:label "Central Payment Revenues" .
+
+example:SolidarityPayments a schema:FinancialTransaction ;
+    rdfs:label "Solidarity Payments" .
+
+example:TVAttendance a schema:Attendance ;
+    rdfs:label "TV Attendance" .
+
+example:StadiumOccupancy a schema:StadiumOccupanc

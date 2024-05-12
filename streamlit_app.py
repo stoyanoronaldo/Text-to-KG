@@ -2,15 +2,10 @@ import os
 from functions import *
 import streamlit as st
 import streamlit_agraph
-from streamlit_agraph import Config, ConfigBuilder
+from streamlit_agraph import Config
+from llamaapi import LlamaAPI
 
-# Ensure an event loop is created before importing poe_api_wrapper
-loop = get_or_create_event_loop()
-
-# Now you can safely import poe_api_wrapper
-from poe_api_wrapper import PoeApi
-
-chat_bot_is_on = False
+chat_bot_is_on = True
 answer = ""
 
 st.set_page_config(
@@ -50,24 +45,21 @@ if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
 
-    tokens = {
-            'b': os.environ.get("POE_B"),
-            'lat': os.environ.get("POE_LAT")
-        }
-
-    client = PoeApi(cookie=tokens)
-
-    bot = 'llama-3-70B-T'
-
     schema_options = st.radio(
         "Choose which schema to use:",
         ("schema.org", "schema1", "schema2"),
         horizontal=True
     )
 
-    task = f'For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties.\nText: '
-    
-    question = task + user_text
+    llama = LlamaAPI(os.environ.get("LLAMA_API_KEY"))
+
+    api_request_json = {
+    "model": "llama3-70b",
+    "messages": [
+        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
+        {"role": "user", "content": f"Text: {user_text}"},
+    ]
+    }
 
     col1, col2= st.columns([0.15, 0.85])
 
@@ -90,10 +82,10 @@ if st.session_state.page_num == 1:
     if st.session_state.validate_turtle:
 
         if chat_bot_is_on:
-            for chunk in client.send_message(bot, question):
-                pass
-            save_answer_to_file(chunk["text"], 'response.txt')
-            answer = get_answer_from_string(chunk["text"])
+            response = llama.run(api_request_json)
+            answer_content = response.json()["choices"][0]["message"]["content"]
+            save_answer_to_file(answer_content, 'response.txt')
+            answer = get_answer_from_string(answer_content)
         else:
             answer = get_answer_from_file('response.txt')
 
