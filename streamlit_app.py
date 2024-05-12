@@ -121,6 +121,7 @@ elif st.session_state.page_num == 2:
     st.session_state.get_answer = False
     if st.session_state.is_valid_turtle:
         answer = st.session_state.answer
+        st.session_state.answer = None
         config = Config(height=550,
                     width=1200,
                     nodeHighlightBehavior=True,
