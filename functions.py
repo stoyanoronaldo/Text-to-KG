@@ -23,6 +23,24 @@ def save_answer_to_file(answer, file_path):
     with open(file_path, 'w') as file:
         file.write(answer)
 
+def check_answer(str):
+    start_index = str.find("```")
+    end_index = str.find("```", start_index + 1)
+    if start_index != -1 and end_index != -1:
+        return True
+    return False
+
+def fix_answer(str):
+    fixed_string = ""
+    start_index = str.find("```")
+    if start_index == -1:
+        fixed_string = str + "\n``` ```\n"
+    end_index = str.find("```", start_index + 1)
+    if end_index == -1:
+        fixed_string = str + "\n```"
+    return fixed_string
+    
+
 def is_valid_turtle(ttl_string):
     g = Graph()
 

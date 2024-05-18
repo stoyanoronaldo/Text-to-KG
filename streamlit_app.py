@@ -84,8 +84,13 @@ if st.session_state.page_num == 1:
         if chat_bot_is_on:
             response = llama.run(api_request_json)
             answer_content = response.json()["choices"][0]["message"]["content"]
-            save_answer_to_file(answer_content, 'response.txt')
-            answer = get_answer_from_string(answer_content)
+            if check_answer(answer_content):
+                save_answer_to_file(answer_content, 'response.txt')
+                answer = get_answer_from_string(answer_content)
+            else:
+                answer_content = fix_answer(answer_content)
+                save_answer_to_file(answer_content, 'response.txt')
+                answer = get_answer_from_string(answer_content)
         else:
             answer = get_answer_from_file('response.txt')
 
