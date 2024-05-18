@@ -47,7 +47,7 @@ if st.session_state.page_num == 1:
 
     schema_options = st.radio(
         "Choose which schema to use:",
-        ("schema.org", "schema1", "schema2"),
+        ("schema.org", "FHIR", "SDO"),
         horizontal=True
     )
 
