@@ -149,7 +149,8 @@ elif st.session_state.page_num == 2:
                     directed=True,
                     physics=False, 
                     hierarchical=False, 
-                    collapsible=True)
+                    collapsible=True,
+                    randomState=42)
 
         if st.session_state.nodes and st.session_state.edges:
             nodes = st.session_state.nodes

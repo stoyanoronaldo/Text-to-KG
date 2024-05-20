@@ -1,4 +1,4 @@
-Here is the representation of the concepts and relations in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
@@ -13,62 +13,57 @@ example:Influenza a schema:Disease ;
 example:HandWashing a schema:PreventionMethod ;
     rdfs:label "Hand Washing" ;
     schema:description "Frequent hand washing to reduce transmission of influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:prevents example:Influenza .
 
 example:CoughingAndSneezing a schema:TransmissionMethod ;
     rdfs:label "Coughing and Sneezing" ;
     schema:description "Coughing and sneezing can transmit influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:transmits example:Influenza .
 
-example:AnnualVaccination a schema:PreventionMethod ;
+example:AnnualVaccination a schema:Vaccination ;
     rdfs:label "Annual Vaccination" ;
     schema:description "Annual vaccination to provide protection against influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:prevents example:Influenza .
 
 example:IAV a schema:Virus ;
     rdfs:label "Influenza A Virus" ;
     schema:description "A type of influenza virus." ;
-    schema:relatedTo example:Influenza .
+    schema:isPartOf example:Influenza .
 
 example:H1N1 a schema:VirusSubtype ;
     rdfs:label "H1N1" ;
     schema:description "A subtype of influenza A virus." ;
-    schema:relatedTo example:IAV .
+    schema:isPartOf example:IAV .
 
 example:H3N2 a schema:VirusSubtype ;
     rdfs:label "H3N2" ;
     schema:description "A subtype of influenza A virus." ;
-    schema:relatedTo example:IAV .
+    schema:isPartOf example:IAV .
 
 example:IBV a schema:Virus ;
     rdfs:label "Influenza B Virus" ;
     schema:description "A type of influenza virus." ;
-    schema:relatedTo example:Influenza .
+    schema:isPartOf example:Influenza .
 
-example:Vaccine a schema:Medicine ;
-    rdfs:label "Influenza Vaccine" ;
-    schema:description "A vaccine to provide protection against influenza." ;
-    schema:relatedTo example:Influenza .
-
-example:AntibodyTest a schema:DiagnosticTest ;
+example:AntibodyTest a schema:DiagnosticMethod ;
     rdfs:label "Antibody Test" ;
     schema:description "A laboratory method to diagnose influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:diagnoses example:Influenza .
 
-example:AntigenTest a schema:DiagnosticTest ;
+example:AntigenTest a schema:DiagnosticMethod ;
     rdfs:label "Antigen Test" ;
     schema:description "A laboratory method to diagnose influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:diagnoses example:Influenza .
 
-example:PCR a schema:DiagnosticTest ;
-    rdfs:label "Polymerase Chain Reaction" ;
+example:PolymeraseChainReaction a schema:DiagnosticMethod ;
+    rdfs:label "Polymerase Chain Reaction (PCR)" ;
     schema:description "A laboratory method to diagnose influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:diagnoses example:Influenza .
 
-example:Oseltamivir a schema:Medicine ;
+example:Oseltamivir a schema:Medication ;
     rdfs:label "Oseltamivir" ;
     schema:description "An antiviral drug to treat influenza." ;
-    schema:relatedTo example:Influenza .
+    schema:treats example:Influenza .
 ```
 
 Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific and meaningful namespace.
