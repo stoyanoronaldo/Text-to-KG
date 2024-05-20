@@ -20,7 +20,7 @@ loop = get_or_create_event_loop()
 # Now you can safely import llamaapi
 from llamaapi import LlamaAPI
 
-chat_bot_is_on = False
+chat_bot_is_on = True
 answer = ""
 
 st.set_page_config(
@@ -65,14 +65,15 @@ if "edges" not in st.session_state:
 if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
+    user_text = replace_non_utf8_characters(user_text)
 
     schema_options = st.radio(
         "Choose which schema to use:",
-        ("schema.org", "FHIR", "SDO"),
+        ("schema.org", "FHIR", "Open Sports"),
         horizontal=True
     )
 
-    llama = LlamaAPI(os.environ.get("LLAMA_API_KEY"))
+    llama = LlamaAPI(os.environ.get("LLAMA_API_KEY2"))
 
     col1, col2= st.columns([0.15, 0.85])
 

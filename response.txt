@@ -1,69 +1,84 @@
-Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here are the concepts and relations between them in Turtle format using RDFS schema, Open Sports, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
-@prefix example: <http://example.org/> .
+@prefix os: <http://www.opensports.org/> .
+@prefix ex: <http://example.org/> .
 
-example:Influenza a schema:Disease ;
-    rdfs:label "Influenza" ;
-    schema:description "A contagious respiratory illness caused by influenza viruses." .
+ex:RealMadrid a os:FootballTeam ;
+    rdfs:label "Real Madrid" .
 
-example:HandWashing a schema:PreventionMethod ;
-    rdfs:label "Hand Washing" ;
-    schema:description "Frequent hand washing to reduce transmission of influenza." ;
-    schema:prevents example:Influenza .
+ex:Villarreal a os:FootballTeam ;
+    rdfs:label "Villarreal" .
 
-example:CoughingAndSneezing a schema:TransmissionMethod ;
-    rdfs:label "Coughing and Sneezing" ;
-    schema:description "Coughing and sneezing can transmit influenza." ;
-    schema:transmits example:Influenza .
+ex:EstadioDeLaCeramica a os:Stadium ;
+    rdfs:label "Estadio de la Cerámica" .
 
-example:AnnualVaccination a schema:Vaccination ;
-    rdfs:label "Annual Vaccination" ;
-    schema:description "Annual vaccination to provide protection against influenza." ;
-    schema:prevents example:Influenza .
+ex:LaLiga a os:FootballLeague ;
+    rdfs:label "LaLiga" .
 
-example:IAV a schema:Virus ;
-    rdfs:label "Influenza A Virus" ;
-    schema:description "A type of influenza virus." ;
-    schema:isPartOf example:Influenza .
+ex:ArdaGuler a os:FootballPlayer ;
+    rdfs:label "Arda Güler" .
 
-example:H1N1 a schema:VirusSubtype ;
-    rdfs:label "H1N1" ;
-    schema:description "A subtype of influenza A virus." ;
-    schema:isPartOf example:IAV .
+ex:Joselu a os:FootballPlayer ;
+    rdfs:label "Joselu" .
 
-example:H3N2 a schema:VirusSubtype ;
-    rdfs:label "H3N2" ;
-    schema:description "A subtype of influenza A virus." ;
-    schema:isPartOf example:IAV .
+ex:LucasVazquez a os:FootballPlayer ;
+    rdfs:label "Lucas Vázquez" .
 
-example:IBV a schema:Virus ;
-    rdfs:label "Influenza B Virus" ;
-    schema:description "A type of influenza virus." ;
-    schema:isPartOf example:Influenza .
+ex:Sorloth a os:FootballPlayer ;
+    rdfs:label "Sorloth" .
 
-example:AntibodyTest a schema:DiagnosticMethod ;
-    rdfs:label "Antibody Test" ;
-    schema:description "A laboratory method to diagnose influenza." ;
-    schema:diagnoses example:Influenza .
+ex:Match a os:FootballMatch ;
+    rdfs:label "Real Madrid vs Villarreal" ;
+    os:homeTeam ex:RealMadrid ;
+    os:awayTeam ex:Villarreal ;
+    os:stadium ex:EstadioDeLaCeramica ;
+    os:competition ex:LaLiga .
 
-example:AntigenTest a schema:DiagnosticMethod ;
-    rdfs:label "Antigen Test" ;
-    schema:description "A laboratory method to diagnose influenza." ;
-    schema:diagnoses example:Influenza .
+ex:FirstHalf a os:MatchPeriod ;
+    rdfs:label "First Half" ;
+    os:partOf ex:Match .
 
-example:PolymeraseChainReaction a schema:DiagnosticMethod ;
-    rdfs:label "Polymerase Chain Reaction (PCR)" ;
-    schema:description "A laboratory method to diagnose influenza." ;
-    schema:diagnoses example:Influenza .
+ex:SecondHalf a os:MatchPeriod ;
+    rdfs:label "Second Half" ;
+    os:partOf ex:Match .
 
-example:Oseltamivir a schema:Medication ;
-    rdfs:label "Oseltamivir" ;
-    schema:description "An antiviral drug to treat influenza." ;
-    schema:treats example:Influenza .
+ex:Goal1 a os:Goal ;
+    rdfs:label "Goal 1" ;
+    os:scoredBy ex:ArdaGuler ;
+    os:partOf ex:FirstHalf .
+
+ex:Goal2 a os:Goal ;
+    rdfs:label "Goal 2" ;
+    os:scoredBy ex:ArdaGuler ;
+    os:partOf ex:FirstHalf .
+
+ex:Goal3 a os:Goal ;
+    rdfs:label "Goal 3" ;
+    os:scoredBy ex:Joselu ;
+    os:partOf ex:FirstHalf .
+
+ex:Goal4 a os:Goal ;
+    rdfs:label "Goal 4" ;
+    os:scoredBy ex:LucasVazquez ;
+    os:partOf ex:FirstHalf .
+
+ex:Goal5 a os:Goal ;
+    rdfs:label "Goal 5" ;
+    os:scoredBy ex:Sorloth ;
+    os:partOf ex:SecondHalf .
+
+ex:Goal6 a os:Goal ;
+    rdfs:label "Goal 6" ;
+    os:scoredBy ex:Sorloth ;
+    os:partOf ex:SecondHalf .
+
+ex:Goal7 a os:Goal ;
+    rdfs:label "Goal 7" ;
+    os:scoredBy ex:Sorloth ;
+    os:partOf ex:SecondHalf .
 ```
 
-Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific and meaningful namespace.
+Note: I assumed that the entities are from example.org, and used Open Sports vocabulary for the concepts and relations. I also created separate entities for the match periods (FirstHalf and SecondHalf) and the goals scored in each period.

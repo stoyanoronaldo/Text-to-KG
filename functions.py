@@ -1,6 +1,7 @@
 from rdflib import Graph, URIRef, BNode
 from streamlit_agraph import Node, Edge
 import re
+import unicodedata
 
 def get_answer_from_file(file_name):
     with open(file_name, 'r') as file:
@@ -67,6 +68,16 @@ def fix_uris_string(input_string):
     fixed_string = re.sub(r'http://example \.\n\s*org/', 'http://example.org/', fixed_string)
 
     return fixed_string
+
+def replace_non_utf8_characters(text):
+    # Normalize the text to a standard form, 'NFC' composes decomposed characters
+    normalized_text = unicodedata.normalize('NFC', text)
+    
+    # Encode to UTF-8, then decode back to string, ignoring errors
+    utf8_text = normalized_text.encode('utf-8', 'ignore').decode('utf-8')
+    
+    # Return the cleaned text
+    return utf8_text
 
 def build_graph(ttl_string):
     g = Graph()

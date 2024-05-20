@@ -1,111 +1,82 @@
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema:<https://schema.org/> .
+@prefix sdo:<https://schema.org/> .
 @prefix example:<http://example.org/> .
 
-example:Influenza
-  a schema:Disease ;
-  rdfs:label "Influenza" ;
-  schema:alternateName "the flu" ;
-  schema:alternateName "flu" ;
-  schema:description "an infectious disease caused by influenza viruses" .
+example:RealMadrid a sdo:SportsTeam ;
+    rdfs:label "Real Madrid" .
 
-example:InfluenzaVirus
-  a schema:Virus ;
-  rdfs:label "Influenza Virus" ;
-  schema:hasPart example:InfluenzaAVirus, example:InfluenzaB Virus, example:InfluenzaCVirus, example:InfluenzaD Virus .
+example:Villarreal a sdo:SportsTeam ;
+    rdfs:label "Villarreal" .
 
-example:InfluenzaAVirus
-  a schema:Virus ;
-  rdfs:label "Influenza A Virus" ;
-  schema:description "primarily found in aquatic birds, also widespread in various mammals, including humans and pigs" .
+example:EstadioDeLaCeramica a sdo:Stadium ;
+    rdfs:label "Estadio de la Ceramica" .
 
-example:InfluenzaB Virus
-  a schema:Virus ;
-  rdfs:label "Influenza B Virus" ;
-  schema:description "primarily infects humans" .
+example:LaLiga a sdo:SportsLeague ;
+    rdfs:label "LaLiga" .
 
-example:InfluenzaCVirus
-  a schema:Virus ;
-  rdfs:label "Influenza C Virus" ;
-  schema:description "causes a mild infection, primarily in children" .
+example:ArdaGuler a sdo:Person ;
+    rdfs:label "Arda Guler" ;
+    sdo:memberOf example:RealMadrid .
 
-example:InfluenzaD Virus
-  a schema:Virus ;
-  rdfs:label "Influenza D Virus" ;
-  schema:description "found in cattle and pigs, can infect humans but is not known to cause illness" .
+example:Joselu a sdo:Person ;
+    rdfs:label "Joselu" ;
+    sdo:memberOf example:RealMadrid .
 
-example:Fever
-  a schema:Symptom ;
-  rdfs:label "Fever" ;
-  schema:isPartOf example:Influenza .
+example:LucasVazquez a sdo:Person ;
+    rdfs:label "Lucas Vazquez" ;
+    sdo:memberOf example:RealMadrid .
 
-example:RunnyNose
-  a schema:Symptom ;
-  rdfs:label "Runny Nose" ;
-  schema:isPartOf example:Influenza .
+example:Sorloth a sdo:Person ;
+    rdfs:label "Sorloth" ;
+    sdo:memberOf example:Villarreal .
 
-example:SoreThroat
-  a schema:Symptom ;
-  rdfs:label "Sore Throat" ;
-  schema:isPartOf example:Influenza .
+example:Match a sdo:SportsEvent ;
+    rdfs:label "Real Madrid vs Villarreal" ;
+    sdo:location example:EstadioDeLaCeramica ;
+    sdo:competitor example:RealMadrid ;
+    sdo:competitor example:Villarreal ;
+    sdo:startDate "2023-02-20"^^xsd:date ;
+    sdo:endDate "2023-02-20"^^xsd:date .
 
-example:MusclePain
-  a schema:Symptom ;
-  rdfs:label "Muscle Pain" ;
-  schema:isPartOf example:Influenza .
+example:FirstHalf a sdo:Event ;
+    rdfs:label "First Half" ;
+    sdo:partOf example:Match ;
+    sdo:startDate "2023-02-20T19:00:00"^^xsd:dateTime ;
+    sdo:endDate "2023-02-20T20:00:00"^^xsd:dateTime .
 
-example:Headache
-  a schema:Symptom ;
-  rdfs:label "Headache" ;
-  schema:isPartOf example:Influenza .
+example:SecondHalf a sdo:Event ;
+    rdfs:label "Second Half" ;
+    sdo:partOf example:Match ;
+    sdo:startDate "2023-02-20T20:00:00"^^xsd:dateTime ;
+    sdo:endDate "2023-02-20T21:00:00"^^xsd:dateTime .
 
-example:Coughing
-  a schema:Symptom ;
-  rdfs:label "Coughing" ;
-  schema:isPartOf example:Influenza .
+example:Goal1 a sdo:SportsEvent ;
+    rdfs:label "Goal by Arda Guler" ;
+    sdo:partOf example:FirstHalf ;
+    sdo:agent example:ArdaGuler .
 
-example:Fatigue
-  a schema:Symptom ;
-  rdfs:label "Fatigue" ;
-  schema:isPartOf example:Influenza .
+example:Goal2 a sdo:SportsEvent ;
+    rdfs:label "Goal by Joselu" ;
+    sdo:partOf example:FirstHalf ;
+    sdo:agent example:Joselu .
 
-example:Diarrhea
-  a schema:Symptom ;
-  rdfs:label "Diarrhea" ;
-  schema:isPartOf example:Influenza .
+example:Goal3 a sdo:SportsEvent ;
+    rdfs:label "Goal by Lucas Vazquez" ;
+    sdo:partOf example:FirstHalf ;
+    sdo:agent example:LucasVazquez .
 
-example:Vomiting
-  a schema:Symptom ;
-  rdfs:label "Vomiting" ;
-  schema:isPartOf example:Influenza .
+example:Goal4 a sdo:SportsEvent ;
+    rdfs:label "Goal by Sorloth" ;
+    sdo:partOf example:SecondHalf ;
+    sdo:agent example:Sorloth .
 
-example:Pneumonia
-  a schema:Complication ;
-  rdfs:label "Pneumonia" ;
-  schema:isComplicationOf example:Influenza .
+example:Goal5 a sdo:SportsEvent ;
+    rdfs:label "Goal by Sorloth" ;
+    sdo:partOf example:SecondHalf ;
+    sdo:agent example:Sorloth .
 
-example:AcuteRespiratoryDistressSyndrome
-  a schema:Complication ;
-  rdfs:label "Acute Respiratory Distress Syndrome" ;
-  schema:isComplicationOf example:Influenza .
-
-example:Meningitis
-  a schema:Complication ;
-  rdfs:label "Meningitis" ;
-  schema:isComplicationOf example:Influenza .
-
-example:Encephalitis
-  a schema:Complication ;
-  rdfs:label "Encephalitis" ;
-  schema:isComplicationOf example:Influenza .
-
-example:Asthma
-  a schema:PreExistingCondition ;
-  rdfs:label "Asthma" ;
-  schema:isAffectedBy example:Influenza .
-
-example:CardiovascularDisease
-  a schema:PreExistingCondition ;
-  rdfs:label "Cardiovascular Disease" ;
-  schema:isAffectedBy example:Influenza .
+example:Goal6 a sdo:SportsEvent ;
+    rdfs:label "Goal by Sorloth" ;
+    sdo:partOf example:SecondHalf ;
+    sdo:agent example:Sorloth .
