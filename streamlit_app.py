@@ -56,6 +56,12 @@ if "validate_turtle" not in st.session_state:
 if "is_valid_turtle" not in st.session_state:
     st.session_state.is_valid_turtle = False
 
+if "nodes" not in st.session_state:
+    st.session_state.nodes = None
+
+if "edges" not in st.session_state:
+    st.session_state.edges = None
+
 if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
@@ -67,14 +73,6 @@ if st.session_state.page_num == 1:
     )
 
     llama = LlamaAPI(os.environ.get("LLAMA_API_KEY"))
-
-    api_request_json = {
-    "model": "llama3-70b",
-    "messages": [
-        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
-        {"role": "user", "content": f"Text: {user_text}"},
-    ]
-    }
 
     col1, col2= st.columns([0.15, 0.85])
 
@@ -103,7 +101,7 @@ if st.session_state.page_num == 1:
                     {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
                     {"role": "user", "content": f"Text: {user_text}"},
                 ]
-                }
+            }
                         
             response = llama.run(api_request_json)
             answer_content = response.json()["choices"][0]["message"]["content"]
@@ -128,6 +126,8 @@ if st.session_state.page_num == 1:
             with st.expander("View turtle"):
                 st.code(answer, language="turtle")
             st.session_state.answer = answer
+            st.session_state.nodes = None
+            st.session_state.edges = None
         else:
             st.write(f"<font color='red'>{is_valid_string}</font>", unsafe_allow_html=True)
             answer = fix_uris_string(answer)
@@ -151,7 +151,13 @@ elif st.session_state.page_num == 2:
                     hierarchical=False, 
                     collapsible=True)
 
-        nodes, edges = build_graph(answer)
+        if st.session_state.nodes and st.session_state.edges:
+            nodes = st.session_state.nodes
+            edges = st.session_state.edges
+        else:
+            nodes, edges = build_graph(answer)
+            st.session_state.nodes = nodes
+            st.session_state.edges = edges
 
         streamlit_agraph.agraph(nodes=nodes, edges=edges, config=config)
     else:

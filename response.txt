@@ -1,66 +1,74 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, FHIR, and example.org for the entities:
+Here is the representation of the concepts and relations in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix fhir: <http://hl7.org/fhir/> .
+@prefix schema: <https://schema.org/> .
 @prefix example: <http://example.org/> .
 
-example:PremierLeague a fhir:Organization ;
-    rdfs:label "Premier League" ;
-    rdfs:comment "The highest level of the English football league system" .
+example:Influenza a schema:Disease ;
+    rdfs:label "Influenza" ;
+    schema:description "A contagious respiratory illness caused by influenza viruses." .
 
-example:EnglishFootballLeague a fhir:Organization ;
-    rdfs:label "English Football League" ;
-    rdfs:comment "The second tier of the English football league system" .
+example:HandWashing a schema:PreventionMethod ;
+    rdfs:label "Hand Washing" ;
+    schema:description "Frequent hand washing to reduce transmission of influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:FA a fhir:Organization ;
-    rdfs:label "The Football Association" ;
-    rdfs:comment "The governing body of English football" .
+example:CoughingAndSneezing a schema:TransmissionMethod ;
+    rdfs:label "Coughing and Sneezing" ;
+    schema:description "Coughing and sneezing can transmit influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:FirstDivision a fhir:Organization ;
-    rdfs:label "First Division" ;
-    rdfs:comment "The top-tier league from 1888 until 1992" .
+example:AnnualVaccination a schema:PreventionMethod ;
+    rdfs:label "Annual Vaccination" ;
+    schema:description "Annual vaccination to provide protection against influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:EFLChampionship a fhir:Organization ;
-    rdfs:label "EFL Championship" ;
-    rdfs:comment "The second tier of the English football league system" .
+example:IAV a schema:Virus ;
+    rdfs:label "Influenza A Virus" ;
+    schema:description "A type of influenza virus." ;
+    schema:relatedTo example:Influenza .
 
-example:Sky a fhir:Organization ;
-    rdfs:label "Sky" ;
-    rdfs:comment "A television broadcaster" .
+example:H1N1 a schema:VirusSubtype ;
+    rdfs:label "H1N1" ;
+    schema:description "A subtype of influenza A virus." ;
+    schema:relatedTo example:IAV .
 
-example:BTGroup a fhir:Organization ;
-    rdfs:label "BT Group" ;
-    rdfs:comment "A telecommunications company" .
+example:H3N2 a schema:VirusSubtype ;
+    rdfs:label "H3N2" ;
+    schema:description "A subtype of influenza A virus." ;
+    schema:relatedTo example:IAV .
 
-example:PremierLeague example:hasMember example:Club ;
-    rdfs:comment "The Premier League has 20 member clubs" .
+example:IBV a schema:Virus ;
+    rdfs:label "Influenza B Virus" ;
+    schema:description "A type of influenza virus." ;
+    schema:relatedTo example:Influenza .
 
-example:Club a fhir:Organization ;
-    rdfs:label "Football Club" ;
-    rdfs:comment "A football club that participates in the Premier League" .
+example:Vaccine a schema:Medicine ;
+    rdfs:label "Influenza Vaccine" ;
+    schema:description "A vaccine to provide protection against influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:PremierLeague example:hasSeason example:Season ;
-    rdfs:comment "The Premier League has a season that runs from August to May" .
+example:AntibodyTest a schema:DiagnosticTest ;
+    rdfs:label "Antibody Test" ;
+    schema:description "A laboratory method to diagnose influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:Season a fhir:Schedule ;
-    rdfs:label "Season" ;
-    rdfs:comment "A period of time when the Premier League is played" .
+example:AntigenTest a schema:DiagnosticTest ;
+    rdfs:label "Antigen Test" ;
+    schema:description "A laboratory method to diagnose influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:PremierLeague example:hasTelevisionRightsDeal example:TelevisionRightsDeal ;
-    rdfs:comment "The Premier League has a television rights deal with Sky and BT Group" .
+example:PCR a schema:DiagnosticTest ;
+    rdfs:label "Polymerase Chain Reaction" ;
+    schema:description "A laboratory method to diagnose influenza." ;
+    schema:relatedTo example:Influenza .
 
-example:TelevisionRightsDeal a fhir:Contract ;
-    rdfs:label "Television Rights Deal" ;
-    rdfs:comment "A contract between the Premier League and television broadcasters" .
-
-example:PremierLeague example:hasRevenue example:Revenue ;
-    rdfs:comment "The Premier League earns revenue from television rights and solidarity payments" .
-
-example:Revenue a fhir:FinancialResource ;
-    rdfs:label "Revenue" ;
-    rdfs:comment "Money earned by the Premier League" .
+example:Oseltamivir a schema:Medicine ;
+    rdfs:label "Oseltamivir" ;
+    schema:description "An antiviral drug to treat influenza." ;
+    schema:relatedTo example:Influenza .
 ```
 
-Note: I used FHIR schema for the entities, but since FHIR is primarily used for healthcare data, I had to use some creative liberties to adapt it to the football league context.
+Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific and meaningful namespace.

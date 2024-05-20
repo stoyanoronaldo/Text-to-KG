@@ -87,7 +87,7 @@ def build_graph(ttl_string):
                 nodes.append(Node(id=str(object), size=20, label=str(object).split("/")[-1], title=str(object)))
                 made_nodes.add(str(object))
             if isinstance(object, URIRef):
-                edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,title=str(predicate).split("/")[-1], width=3))
+                edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,title=str(predicate).split("/")[-1].split("#")[-1], width=3))
             else:
                 for node in nodes:
                     if node.id == str(subject):
