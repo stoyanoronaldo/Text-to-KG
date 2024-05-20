@@ -1,86 +1,66 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here are the concepts and relations between them in Turtle format using RDFS schema, FHIR, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
+@prefix fhir: <http://hl7.org/fhir/> .
 @prefix example: <http://example.org/> .
 
-example:Bundesliga
-  a schema:SportsLeague ;
-  rdfs:label "Bundesliga" ;
-  schema:description "A professional association football league in Germany" ;
-  schema:country example:Germany ;
-  schema:leagueSystem example:GermanFootballLeagueSystem ;
-  schema:teams 18 ;
-  schema:promotionRelegation example:2Bundesliga ;
-  schema:seasonDuration "August to May" ;
-  schema:gameDays "Fridays, Saturdays, and Sundays" ;
-  schema:cupCompetition example:DFBPokal ;
-  schema:supercup example:DFLSupercup .
+example:PremierLeague a fhir:Organization ;
+    rdfs:label "Premier League" ;
+    rdfs:comment "The highest level of the English football league system" .
 
-example:GermanFootballLeagueSystem
-  a schema:SportsLeagueSystem ;
-  rdfs:label "German Football League System" ;
-  schema:topLeague example:Bundesliga ;
-  schema:secondLeague example:2Bundesliga .
+example:EnglishFootballLeague a fhir:Organization ;
+    rdfs:label "English Football League" ;
+    rdfs:comment "The second tier of the English football league system" .
 
-example:2Bundesliga
-  a schema:SportsLeague ;
-  rdfs:label "2. Bundesliga" ;
-  schema:description "The second tier of the German football league system" ;
-  schema:promotionRelegation example:Bundesliga .
+example:FA a fhir:Organization ;
+    rdfs:label "The Football Association" ;
+    rdfs:comment "The governing body of English football" .
 
-example:DFBPokal
-  a schema:CupCompetition ;
-  rdfs:label "DFB-Pokal" ;
-  schema:description "A annual knockout football cup competition in Germany" .
+example:FirstDivision a fhir:Organization ;
+    rdfs:label "First Division" ;
+    rdfs:comment "The top-tier league from 1888 until 1992" .
 
-example:DFLSupercup
-  a schema:Supercup ;
-  rdfs:label "DFL-Supercup" ;
-  schema:description "A annual super cup competition in Germany" .
+example:EFLChampionship a fhir:Organization ;
+    rdfs:label "EFL Championship" ;
+    rdfs:comment "The second tier of the English football league system" .
 
-example:BayernMunich
-  a schema:SportsTeam ;
-  rdfs:label "Bayern Munich" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga ;
-  schema:titles 32 .
+example:Sky a fhir:Organization ;
+    rdfs:label "Sky" ;
+    rdfs:comment "A television broadcaster" .
 
-example:BorussiaDortmund
-  a schema:SportsTeam ;
-  rdfs:label "Borussia Dortmund" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga .
+example:BTGroup a fhir:Organization ;
+    rdfs:label "BT Group" ;
+    rdfs:comment "A telecommunications company" .
 
-example:HamburgerSV
-  a schema:SportsTeam ;
-  rdfs:label "Hamburger SV" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga .
+example:PremierLeague example:hasMember example:Club ;
+    rdfs:comment "The Premier League has 20 member clubs" .
 
-example:WerderBremen
-  a schema:SportsTeam ;
-  rdfs:label "Werder Bremen" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga .
+example:Club a fhir:Organization ;
+    rdfs:label "Football Club" ;
+    rdfs:comment "A football club that participates in the Premier League" .
 
-example:BorussiaMonchengladbach
-  a schema:SportsTeam ;
-  rdfs:label "Borussia Mönchengladbach" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga .
+example:PremierLeague example:hasSeason example:Season ;
+    rdfs:comment "The Premier League has a season that runs from August to May" .
 
-example:VfBStuttgart
-  a schema:SportsTeam ;
-  rdfs:label "VfB Stuttgart" ;
-  schema:description "A professional football club in Germany" ;
-  schema:league example:Bundesliga .
+example:Season a fhir:Schedule ;
+    rdfs:label "Season" ;
+    rdfs:comment "A period of time when the Premier League is played" .
 
-example:Germany
-  a schema:Country ;
-  rdfs:label "Germany" .
+example:PremierLeague example:hasTelevisionRightsDeal example:TelevisionRightsDeal ;
+    rdfs:comment "The Premier League has a television rights deal with Sky and BT Group" .
+
+example:TelevisionRightsDeal a fhir:Contract ;
+    rdfs:label "Television Rights Deal" ;
+    rdfs:comment "A contract between the Premier League and television broadcasters" .
+
+example:PremierLeague example:hasRevenue example:Revenue ;
+    rdfs:comment "The Premier League earns revenue from television rights and solidarity payments" .
+
+example:Revenue a fhir:FinancialResource ;
+    rdfs:label "Revenue" ;
+    rdfs:comment "Money earned by the Premier League" .
 ```
 
-Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your data.
+Note: I used FHIR schema for the entities, but since FHIR is primarily used for healthcare data, I had to use some creative liberties to adapt it to the football league context.

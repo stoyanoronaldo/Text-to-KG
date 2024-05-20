@@ -3,122 +3,52 @@
 @prefix schema:<http://schema.org/> .
 @prefix example:<http://example.org/> .
 
-example:PremierLeague a schema:SportsLeague ;
+example:PremierLeague a schema:SportsOrganization ;
     rdfs:label "Premier League" ;
     schema:description "The highest level of the English football league system" ;
-    schema:memberOf example:EnglishFootballLeagueSystem .
+    schema:foundingDate "1992-02-20" ;
+    schema:member example:Club1, example:Club2, ... (20 clubs) ;
+    schema:leagueSystem example:EnglishFootballLeagueSystem .
 
 example:EnglishFootballLeagueSystem a schema:SportsLeagueSystem ;
-    rdfs:label "English Football League System" .
+    rdfs:label "English Football League System" ;
+    schema:hasPart example:PremierLeague, example:EFLChampionship .
 
-example:EnglishFootballLeague a schema:SportsLeague ;
-    rdfs:label "English Football League" ;
-    schema:memberOf example:EnglishFootballLeagueSystem .
+example:EFLChampionship a schema:SportsLeague ;
+    rdfs:label "EFL Championship" ;
+    schema:partOf example:EnglishFootballLeagueSystem .
 
-example:EFL a schema:SportsLeague ;
-    rdfs:label "English Football League" ;
-    schema:memberOf example:EnglishFootballLeagueSystem .
-
-example:FA a schema:SportsOrganization ;
-    rdfs:label "Football Association" .
-
-example:FirstDivision a schema:SportsLeague ;
-    rdfs:label "First Division" ;
-    schema:memberOf example:EnglishFootballLeagueSystem .
-
-example:PremierLeagueClubs a schema:SportsTeam ;
-    rdfs:label "Premier League Clubs" ;
+example:Club1 a schema:SportsTeam ;
+    rdfs:label "Club 1" ;
     schema:memberOf example:PremierLeague .
 
-example:ManchesterUnited a schema:SportsTeam ;
-    rdfs:label "Manchester United" ;
-    schema:memberOf example:PremierLeagueClubs .
+example:Club2 a schema:SportsTeam ;
+    rdfs:label "Club 2" ;
+    schema:memberOf example:PremierLeague .
 
-example:ManchesterCity a schema:SportsTeam ;
-    rdfs:label "Manchester City" ;
-    schema:memberOf example:PremierLeagueClubs .
+...
 
-example:Chelsea a schema:SportsTeam ;
-    rdfs:label "Chelsea" ;
-    schema:memberOf example:PremierLeagueClubs .
-
-example:Arsenal a schema:SportsTeam ;
-    rdfs:label "Arsenal" ;
-    schema:memberOf example:PremierLeagueClubs .
-
-example:BlackburnRovers a schema:SportsTeam ;
-    rdfs:label "Blackburn Rovers" ;
-    schema:memberOf example:PremierLeagueClubs .
-
-example:LeicesterCity a schema:SportsTeam ;
-    rdfs:label "Leicester City" ;
-    schema:memberOf example:PremierLeagueClubs .
-
-example:Liverpool a schema:SportsTeam ;
-    rdfs:label "Liverpool" ;
-    schema:memberOf example:PremierLeagueClubs .
+example:TVDeal a schema:MediaRights ;
+    rdfs:label "TV Rights Deal" ;
+    schema:value "£5 billion" ;
+    schema:startDate "2022" ;
+    schema:endDate "2025" ;
+    schema:grantee example:Sky, example:BTGroup .
 
 example:Sky a schema:Organization ;
-    rdfs:label "Sky" .
+    rdfs:label "Sky" ;
+    schema:grantee example:TVDeal .
 
 example:BTGroup a schema:Organization ;
-    rdfs:label "BT Group" .
+    rdfs:label "BT Group" ;
+    schema:grantee example:TVDeal .
 
-example:UEFA a schema:SportsOrganization ;
-    rdfs:label "Union of European Football Associations" .
+example:CentralPayment a schema:MonetaryGrant ;
+    rdfs:label "Central Payment" ;
+    schema:value "£2.4 billion" ;
+    schema:beneficiary example:PremierLeague .
 
-example:LaLiga a schema:SportsLeague ;
-    rdfs:label "La Liga" ;
-    schema:memberOf example:SpanishFootballLeagueSystem .
-
-example:Bundesliga a schema:SportsLeague ;
-    rdfs:label "Bundesliga" ;
-    schema:memberOf example:GermanFootballLeagueSystem .
-
-example:EuropeanCup a schema:SportsTournament ;
-    rdfs:label "European Cup" .
-
-example:UEFAChampionsLeague a schema:SportsTournament ;
-    rdfs:label "UEFA Champions League" .
-
-example:EnglishTopFlight a schema:SportsLeague ;
-    rdfs:label "English Top-Flight" ;
-    schema:memberOf example:EnglishFootballLeagueSystem .
-
-example:Wales a schema:Country ;
-    rdfs:label "Wales" .
-
-example:England a schema:Country ;
-    rdfs:label "England" .
-
-example:August a schema:Month ;
-    rdfs:label "August" .
-
-example:May a schema:Month ;
-    rdfs:label "May" .
-
-example:Saturday a schema:DayOfWeek ;
-    rdfs:label "Saturday" .
-
-example:Sunday a schema:DayOfWeek ;
-    rdfs:label "Sunday" .
-
-example:Weekday a schema:DayOfWeek ;
-    rdfs:label "Weekday" .
-
-example:Evening a schema:TimeOfDay ;
-    rdfs:label "Evening" .
-
-example:TelevisionRights a schema:Rights ;
-    rdfs:label "Television Rights" .
-
-example:CentralPaymentRevenues a schema:FinancialTransaction ;
-    rdfs:label "Central Payment Revenues" .
-
-example:SolidarityPayments a schema:FinancialTransaction ;
-    rdfs:label "Solidarity Payments" .
-
-example:TVAttendance a schema:Attendance ;
-    rdfs:label "TV Attendance" .
-
-example:StadiumOccupancy a schema:StadiumOccupanc
+example:SolidarityPayment a schema:MonetaryGrant ;
+    rdfs:label "Solidarity Payment" ;
+    schema:value "£343 million" ;
+    schema:beneficiary example:EFLChampionship .

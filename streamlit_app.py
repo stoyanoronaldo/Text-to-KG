@@ -14,10 +14,10 @@ def get_or_create_event_loop():
             asyncio.set_event_loop(loop)
             return loop
 
-# Ensure an event loop is created before importing poe_api_wrapper
+# Ensure an event loop is created before importing llamaapi
 loop = get_or_create_event_loop()
 
-# Now you can safely import llama_api
+# Now you can safely import llamaapi
 from llamaapi import LlamaAPI
 
 chat_bot_is_on = True
@@ -97,6 +97,14 @@ if st.session_state.page_num == 1:
     if st.session_state.validate_turtle:
 
         if chat_bot_is_on:
+            api_request_json = {
+                "model": "llama3-70b",
+                "messages": [
+                    {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
+                    {"role": "user", "content": f"Text: {user_text}"},
+                ]
+                }
+                        
             response = llama.run(api_request_json)
             answer_content = response.json()["choices"][0]["message"]["content"]
             if check_answer(answer_content):
