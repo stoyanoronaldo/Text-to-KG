@@ -1,63 +1,86 @@
-Here is the representation of the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here are the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
-@prefix example: <https://example.org/> .
+@prefix schema: <http://schema.org/> .
+@prefix example: <http://example.org/> .
 
-example:TwoAndAHalfMen a schema:TVSeries ;
-    rdfs:label "Two and a Half Men" ;
-    schema:creator [ a schema:Person ;
-        rdfs:label "Chuck Lorre" ;
-        schema:role "Creator" ] ;
-    schema:creator [ a schema:Person ;
-        rdfs:label "Lee Aronsohn" ;
-        schema:role "Creator" ] ;
-    schema:startDate "2003-09-22" ;
-    schema:endDate "2015-02-19" ;
-    schema:numberOfSeasons 12 ;
-    schema:numberOfEpisodes 262 .
+example:Bundesliga
+  a schema:SportsLeague ;
+  rdfs:label "Bundesliga" ;
+  schema:description "A professional association football league in Germany" ;
+  schema:country example:Germany ;
+  schema:leagueSystem example:GermanFootballLeagueSystem ;
+  schema:teams 18 ;
+  schema:promotionRelegation example:2Bundesliga ;
+  schema:seasonDuration "August to May" ;
+  schema:gameDays "Fridays, Saturdays, and Sundays" ;
+  schema:cupCompetition example:DFBPokal ;
+  schema:supercup example:DFLSupercup .
 
-example:CharlieSheen a schema:Person ;
-    rdfs:label "Charlie Sheen" ;
-    schema:role "Actor" ;
-    schema:character [ a schema:Character ;
-        rdfs:label "Charlie Harper" ] .
+example:GermanFootballLeagueSystem
+  a schema:SportsLeagueSystem ;
+  rdfs:label "German Football League System" ;
+  schema:topLeague example:Bundesliga ;
+  schema:secondLeague example:2Bundesliga .
 
-example:JonCryer a schema:Person ;
-    rdfs:label "Jon Cryer" ;
-    schema:role "Actor" ;
-    schema:character [ a schema:Character ;
-        rdfs:label "Alan Harper" ] .
+example:2Bundesliga
+  a schema:SportsLeague ;
+  rdfs:label "2. Bundesliga" ;
+  schema:description "The second tier of the German football league system" ;
+  schema:promotionRelegation example:Bundesliga .
 
-example:AngusTJones a schema:Person ;
-    rdfs:label "Angus T. Jones" ;
-    schema:role "Actor" ;
-    schema:character [ a schema:Character ;
-        rdfs:label "Jake Harper" ] .
+example:DFBPokal
+  a schema:CupCompetition ;
+  rdfs:label "DFB-Pokal" ;
+  schema:description "A annual knockout football cup competition in Germany" .
 
-example:AshtonKutcher a schema:Person ;
-    rdfs:label "Ashton Kutcher" ;
-    schema:role "Actor" ;
-    schema:character [ a schema:Character ;
-        rdfs:label "Walden Schmidt" ] .
+example:DFLSupercup
+  a schema:Supercup ;
+  rdfs:label "DFL-Supercup" ;
+  schema:description "A annual super cup competition in Germany" .
 
-example:CBS a schema:Organization ;
-    rdfs:label "CBS" ;
-    schema:role "Broadcaster" .
+example:BayernMunich
+  a schema:SportsTeam ;
+  rdfs:label "Bayern Munich" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga ;
+  schema:titles 32 .
 
-example:WarnerBrosTelevision a schema:Organization ;
-    rdfs:label "Warner Bros. Television" ;
-    schema:role "Producer" .
+example:BorussiaDortmund
+  a schema:SportsTeam ;
+  rdfs:label "Borussia Dortmund" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga .
 
-example:ChuckLorre a schema:Person ;
-    rdfs:label "Chuck Lorre" ;
-    schema:role "Executive Producer" .
+example:HamburgerSV
+  a schema:SportsTeam ;
+  rdfs:label "Hamburger SV" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga .
 
-example:OfCourseHesDead a schema:Episode ;
-    rdfs:label "Of Course He's Dead" ;
-    schema:partOf <https://example.org/TwoAndAHalfMen> .
+example:WerderBremen
+  a schema:SportsTeam ;
+  rdfs:label "Werder Bremen" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga .
+
+example:BorussiaMonchengladbach
+  a schema:SportsTeam ;
+  rdfs:label "Borussia Mönchengladbach" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga .
+
+example:VfBStuttgart
+  a schema:SportsTeam ;
+  rdfs:label "VfB Stuttgart" ;
+  schema:description "A professional football club in Germany" ;
+  schema:league example:Bundesliga .
+
+example:Germany
+  a schema:Country ;
+  rdfs:label "Germany" .
 ```
 
-Note: I used `example.org` as the namespace for the entities, but you can replace it with your own namespace if needed.
+Note: I used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your data.

@@ -3,6 +3,21 @@ from functions import *
 import streamlit as st
 import streamlit_agraph
 from streamlit_agraph import Config
+import asyncio
+
+def get_or_create_event_loop():
+    try:
+        return asyncio.get_event_loop()
+    except RuntimeError as ex:
+        if "There is no current event loop in thread" in str(ex):
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            return loop
+
+# Ensure an event loop is created before importing poe_api_wrapper
+loop = get_or_create_event_loop()
+
+# Now you can safely import llama_api
 from llamaapi import LlamaAPI
 
 chat_bot_is_on = True
