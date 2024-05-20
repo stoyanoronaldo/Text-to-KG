@@ -20,7 +20,7 @@ loop = get_or_create_event_loop()
 # Now you can safely import llamaapi
 from llamaapi import LlamaAPI
 
-chat_bot_is_on = True
+chat_bot_is_on = False
 answer = ""
 
 st.set_page_config(
