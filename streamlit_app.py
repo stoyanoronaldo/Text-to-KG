@@ -65,7 +65,7 @@ if "edges" not in st.session_state:
 if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
-    user_text = replace_non_utf8_characters(user_text)
+    #user_text = replace_non_utf8_characters(user_text)
 
     schema_options = st.radio(
         "Choose which schema to use:",
@@ -100,7 +100,7 @@ if st.session_state.page_num == 1:
                 "model": "llama3-70b",
                 "messages": [
                     {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
-                    {"role": "user", "content": f"Text: {user_text}"},
+                    {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
                 ]
             }
                         

@@ -65,9 +65,12 @@ def fix_turtle_syntax_string(input_string):
     # Fix common Turtle syntax issues
     # Ensure proper spacing around colons
     fixed_string = re.sub(r'\s*\:\s*', ':', input_string)
+
+    fixed_string = re.sub(r'(example:[^\s]+)\s([^\s]+) (a schema:)', r'\1_\2 \3', fixed_string, flags=re.MULTILINE)
+
     if text_has_xsd(fixed_string) and (not(text_has_xsd_prefix(fixed_string))):
         fixed_string = add_xsd_prefix(fixed_string)
-
+    
     # Ensure quotes are properly closed
     #fixed_string = re.sub(r'\"([^\"]*)\"', r'"\1"', fixed_string)
 

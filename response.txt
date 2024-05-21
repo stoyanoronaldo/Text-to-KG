@@ -6,79 +6,78 @@ Here are the concepts and relations between them in Turtle format using RDFS sch
 @prefix os: <http://www.opensports.org/> .
 @prefix ex: <http://example.org/> .
 
-ex:RealMadrid a os:FootballTeam ;
-    rdfs:label "Real Madrid" .
+ex:LosAngelesLakers a os:Team ;
+    rdfs:label "Los Angeles Lakers" ;
+    os:competesIn os:NBA ;
+    os:division os:PacificDivision ;
+    os:conference os:WesternConference ;
+    os:homeArena ex:CryptoComArena .
 
-ex:Villarreal a os:FootballTeam ;
-    rdfs:label "Villarreal" .
+ex:CryptoComArena a os:Arena ;
+    rdfs:label "Crypto.com Arena" ;
+    os:location ex:LosAngeles .
 
-ex:EstadioDeLaCeramica a os:Stadium ;
-    rdfs:label "Estadio de la Cerámica" .
+ex:LosAngeles a os:City ;
+    rdfs:label "Los Angeles" .
 
-ex:LaLiga a os:FootballLeague ;
-    rdfs:label "LaLiga" .
+ex:NationalBasketballAssociation a os:League ;
+    rdfs:label "National Basketball Association" ;
+    os:abbreviation "NBA" .
 
-ex:ArdaGuler a os:FootballPlayer ;
-    rdfs:label "Arda Güler" .
+ex:PacificDivision a os:Division ;
+    rdfs:label "Pacific Division" ;
+    os:partOf ex:WesternConference .
 
-ex:Joselu a os:FootballPlayer ;
-    rdfs:label "Joselu" .
+ex:WesternConference a os:Conference ;
+    rdfs:label "Western Conference" ;
+    os:partOf ex:NBA .
 
-ex:LucasVazquez a os:FootballPlayer ;
-    rdfs:label "Lucas Vázquez" .
+ex:LosAngelesClippers a os:Team ;
+    rdfs:label "Los Angeles Clippers" ;
+    os:competesIn ex:NBA ;
+    os:homeArena ex:CryptoComArena .
 
-ex:Sorloth a os:FootballPlayer ;
-    rdfs:label "Sorloth" .
+ex:LosAngelesSparks a os:Team ;
+    rdfs:label "Los Angeles Sparks" ;
+    os:competesIn ex:WNBA ;
+    os:homeArena ex:CryptoComArena .
 
-ex:Match a os:FootballMatch ;
-    rdfs:label "Real Madrid vs Villarreal" ;
-    os:homeTeam ex:RealMadrid ;
-    os:awayTeam ex:Villarreal ;
-    os:stadium ex:EstadioDeLaCeramica ;
-    os:competition ex:LaLiga .
+ex:LosAngelesKings a os:Team ;
+    rdfs:label "Los Angeles Kings" ;
+    os:competesIn ex:NHL ;
+    os:homeArena ex:CryptoComArena .
 
-ex:FirstHalf a os:MatchPeriod ;
-    rdfs:label "First Half" ;
-    os:partOf ex:Match .
+ex:BostonCeltics a os:Team ;
+    rdfs:label "Boston Celtics" ;
+    os:competesIn ex:NBA .
 
-ex:SecondHalf a os:MatchPeriod ;
-    rdfs:label "Second Half" ;
-    os:partOf ex:Match .
+ex:WiltChamberlain a os:Player ;
+    rdfs:label "Wilt Chamberlain" ;
+    os:playedFor ex:LosAngelesLakers .
 
-ex:Goal1 a os:Goal ;
-    rdfs:label "Goal 1" ;
-    os:scoredBy ex:ArdaGuler ;
-    os:partOf ex:FirstHalf .
+ex:BillSharman a os:Coach ;
+    rdfs:label "Bill Sharman" ;
+    os:coached ex:LosAngelesLakers .
 
-ex:Goal2 a os:Goal ;
-    rdfs:label "Goal 2" ;
-    os:scoredBy ex:ArdaGuler ;
-    os:partOf ex:FirstHalf .
+ex:KareemAbdulJabbar a os:Player ;
+    rdfs:label "Kareem Abdul-Jabbar" ;
+    os:playedFor ex:LosAngelesLakers .
 
-ex:Goal3 a os:Goal ;
-    rdfs:label "Goal 3" ;
-    os:scoredBy ex:Joselu ;
-    os:partOf ex:FirstHalf .
+ex:JerryBuss a os:Owner ;
+    rdfs:label "Jerry Buss" ;
+    os:owns ex:LosAngelesLakers .
 
-ex:Goal4 a os:Goal ;
-    rdfs:label "Goal 4" ;
-    os:scoredBy ex:LucasVazquez ;
-    os:partOf ex:FirstHalf .
+ex:MagicJohnson a os:Player ;
+    rdfs:label "Magic Johnson" ;
+    os:playedFor ex:LosAngelesLakers .
 
-ex:Goal5 a os:Goal ;
-    rdfs:label "Goal 5" ;
-    os:scoredBy ex:Sorloth ;
-    os:partOf ex:SecondHalf .
+ex:PatRiley a os:Coach ;
+    rdfs:label "Pat Riley" ;
+    os:coached ex:LosAngelesLakers .
 
-ex:Goal6 a os:Goal ;
-    rdfs:label "Goal 6" ;
-    os:scoredBy ex:Sorloth ;
-    os:partOf ex:SecondHalf .
-
-ex:Goal7 a os:Goal ;
-    rdfs:label "Goal 7" ;
-    os:scoredBy ex:Sorloth ;
-    os:partOf ex:SecondHalf .
+ex:JamesWorthy a os:Player ;
+    rdfs:label "James Worthy" ;
+    os:playedFor ex:LosAngelesLakers .
 ```
 
-Note: I assumed that the entities are from example.org, and used Open Sports vocabulary for the concepts and relations. I also created separate entities for the match periods (FirstHalf and SecondHalf) and the goals scored in each period.
+Note: I used the `os:` prefix for Open Sports, `ex:` for example.org, and `rdf:` and `rdfs:` for RDF and RDFS respectively. I also used the `a` keyword to specify the type of each entity, and the `rdfs:label` property to specify the label for each entity.
