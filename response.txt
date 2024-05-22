@@ -1,83 +1,72 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, Open Sports, and example.org for the entities:
+Here are the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix os: <http://www.opensports.org/> .
-@prefix ex: <http://example.org/> .
+@prefix schema: <https://schema.org/> .
+@prefix example: <https://example.org/> .
 
-ex:LosAngelesLakers a os:Team ;
-    rdfs:label "Los Angeles Lakers" ;
-    os:competesIn os:NBA ;
-    os:division os:PacificDivision ;
-    os:conference os:WesternConference ;
-    os:homeArena ex:CryptoComArena .
+# Entities
+example:PremierLeague a schema:SportsLeague ;
+    rdfs:label "Premier League" ;
+    schema:description "The highest level of the English football league system" .
 
-ex:CryptoComArena a os:Arena ;
-    rdfs:label "Crypto.com Arena" ;
-    os:location ex:LosAngeles .
+example:EnglishFootballLeague a schema:SportsLeague ;
+    rdfs:label "English Football League" ;
+    schema:description "The second tier of the English football league system" .
 
-ex:LosAngeles a os:City ;
-    rdfs:label "Los Angeles" .
+example:FA a schema:SportsOrganization ;
+    rdfs:label "The Football Association" ;
+    schema:description "The governing body of English football" .
 
-ex:NationalBasketballAssociation a os:League ;
-    rdfs:label "National Basketball Association" ;
-    os:abbreviation "NBA" .
+example:Sky a schema:Organization ;
+    rdfs:label "Sky" ;
+    schema:description "A British telecommunications company" .
 
-ex:PacificDivision a os:Division ;
-    rdfs:label "Pacific Division" ;
-    os:partOf ex:WesternConference .
+example:BTGroup a schema:Organization ;
+    rdfs:label "BT Group" ;
+    schema:description "A British telecommunications company" .
 
-ex:WesternConference a os:Conference ;
-    rdfs:label "Western Conference" ;
-    os:partOf ex:NBA .
+example:ManchesterUnited a schema:SportsTeam ;
+    rdfs:label "Manchester United" ;
+    schema:description "A professional football club based in Manchester" .
 
-ex:LosAngelesClippers a os:Team ;
-    rdfs:label "Los Angeles Clippers" ;
-    os:competesIn ex:NBA ;
-    os:homeArena ex:CryptoComArena .
+example:ManchesterCity a schema:SportsTeam ;
+    rdfs:label "Manchester City" ;
+    schema:description "A professional football club based in Manchester" .
 
-ex:LosAngelesSparks a os:Team ;
-    rdfs:label "Los Angeles Sparks" ;
-    os:competesIn ex:WNBA ;
-    os:homeArena ex:CryptoComArena .
+example:Chelsea a schema:SportsTeam ;
+    rdfs:label "Chelsea" ;
+    schema:description "A professional football club based in London" .
 
-ex:LosAngelesKings a os:Team ;
-    rdfs:label "Los Angeles Kings" ;
-    os:competesIn ex:NHL ;
-    os:homeArena ex:CryptoComArena .
+example:Arsenal a schema:SportsTeam ;
+    rdfs:label "Arsenal" ;
+    schema:description "A professional football club based in London" .
 
-ex:BostonCeltics a os:Team ;
-    rdfs:label "Boston Celtics" ;
-    os:competesIn ex:NBA .
+example:BlackburnRovers a schema:SportsTeam ;
+    rdfs:label "Blackburn Rovers" ;
+    schema:description "A professional football club based in Blackburn" .
 
-ex:WiltChamberlain a os:Player ;
-    rdfs:label "Wilt Chamberlain" ;
-    os:playedFor ex:LosAngelesLakers .
+example:LeicesterCity a schema:SportsTeam ;
+    rdfs:label "Leicester City" ;
+    schema:description "A professional football club based in Leicester" .
 
-ex:BillSharman a os:Coach ;
-    rdfs:label "Bill Sharman" ;
-    os:coached ex:LosAngelesLakers .
+example:Liverpool a schema:SportsTeam ;
+    rdfs:label "Liverpool" ;
+    schema:description "A professional football club based in Liverpool" .
 
-ex:KareemAbdulJabbar a os:Player ;
-    rdfs:label "Kareem Abdul-Jabbar" ;
-    os:playedFor ex:LosAngelesLakers .
-
-ex:JerryBuss a os:Owner ;
-    rdfs:label "Jerry Buss" ;
-    os:owns ex:LosAngelesLakers .
-
-ex:MagicJohnson a os:Player ;
-    rdfs:label "Magic Johnson" ;
-    os:playedFor ex:LosAngelesLakers .
-
-ex:PatRiley a os:Coach ;
-    rdfs:label "Pat Riley" ;
-    os:coached ex:LosAngelesLakers .
-
-ex:JamesWorthy a os:Player ;
-    rdfs:label "James Worthy" ;
-    os:playedFor ex:LosAngelesLakers .
+# Relations
+example:PremierLeague schema:leagueSystem example:EnglishFootballLeague .
+example:PremierLeague schema:founder example:FA .
+example:PremierLeague schema:hasPart example:ManchesterUnited .
+example:PremierLeague schema:hasPart example:ManchesterCity .
+example:PremierLeague schema:hasPart example:Chelsea .
+example:PremierLeague schema:hasPart example:Arsenal .
+example:PremierLeague schema:hasPart example:BlackburnRovers .
+example:PremierLeague schema:hasPart example:LeicesterCity .
+example:PremierLeague schema:hasPart example:Liverpool .
+example:Sky schema:broadcasts example:PremierLeague .
+example:BTGroup schema:broadcasts example:PremierLeague .
 ```
 
-Note: I used the `os:` prefix for Open Sports, `ex:` for example.org, and `rdf:` and `rdfs:` for RDF and RDFS respectively. I also used the `a` keyword to specify the type of each entity, and the `rdfs:label` property to specify the label for each entity.
+Note: I've used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your organization or domain.

@@ -69,7 +69,7 @@ if st.session_state.page_num == 1:
 
     schema_options = st.radio(
         "Choose which schema to use:",
-        ("schema.org", "FHIR", "Open Sports"),
+        ("schema.org", "FHIR"),
         horizontal=True
     )
 
@@ -96,13 +96,15 @@ if st.session_state.page_num == 1:
     if st.session_state.validate_turtle:
 
         if chat_bot_is_on:
+            
             api_request_json = {
                 "model": "llama3-70b",
                 "messages": [
-                    {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, {schema_options} and example.org for the enteties."},
+                    {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, XML schema ,{schema_options} and example.org for the enteties."},
                     {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
                 ]
             }
+            
                         
             response = llama.run(api_request_json)
             answer_content = response.json()["choices"][0]["message"]["content"]
