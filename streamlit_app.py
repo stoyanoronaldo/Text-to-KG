@@ -73,7 +73,8 @@ if st.session_state.page_num == 1:
         horizontal=True
     )
 
-    llama = LlamaAPI(os.environ.get("LLAMA_API_KEY2"))
+    #llama = LlamaAPI(os.environ.get("LLAMA_API_KEY"))
+    llama = LlamaAPI("LL-0GnzCST2ctEjinWEhaiT7ErxjRrZ4SfMq4hSsNWT3YNjynq8SZCDNdWbblwULzVK")
 
     col1, col2= st.columns([0.15, 0.85])
 

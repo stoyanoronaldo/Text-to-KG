@@ -1,72 +1,66 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, schema.org, and example.org for the entities:
+Here are the concepts and relations between them in Turtle format using RDFS schema, XML schema, schema.org, and example.org for the entities:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <https://schema.org/> .
-@prefix example: <https://example.org/> .
+@prefix schema: <http://schema.org/> .
+@prefix example: <http://example.org/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-# Entities
-example:PremierLeague a schema:SportsLeague ;
-    rdfs:label "Premier League" ;
-    schema:description "The highest level of the English football league system" .
+example:EiffelTower
+  a schema:Landmark, schema:TouristAttraction ;
+  rdfs:label "Eiffel Tower" ;
+  schema:description "A wrought-iron lattice tower on the Champ de Mars in Paris, France" ;
+  schema:location example:Paris ;
+  schema:address "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France" ;
+  schema:geo [ 
+    schema:latitude "48.8583" ;
+    schema:longitude "2.2943" ;
+  ] ;
+  schema:openingHours "Daily 9:30 AM - 11:45 PM" ;
+  schema:creator example:GustaveEiffel ;
+  schema:designer example:GustaveEiffel ;
+  schema:builder example:GustaveEiffel ;
+  schema:constructionStarted "1887" ;
+  schema:constructionFinished "1889" ;
+  schema:event example:1889WorldsFair ;
+  schema:award example:MonumentHistorique ;
+  schema:award example:UNESCOWorldHeritageSite ;
+  schema:alternateName "La dame de fer" ;
+  schema:alternateName "Iron Lady" ;
+  schema:visitedBy 5889000 ;
+  schema:visitedBy 6910000 .
 
-example:EnglishFootballLeague a schema:SportsLeague ;
-    rdfs:label "English Football League" ;
-    schema:description "The second tier of the English football league system" .
+example:GustaveEiffel
+  a schema:Person ;
+  rdfs:label "Gustave Eiffel" ;
+  schema:birthDate "1832-12-15" ;
+  schema:deathDate "1923-12-31" ;
+  schema:nationality "French" .
 
-example:FA a schema:SportsOrganization ;
-    rdfs:label "The Football Association" ;
-    schema:description "The governing body of English football" .
+example:Paris
+  a schema:City ;
+  rdfs:label "Paris" ;
+  schema:country example:France .
 
-example:Sky a schema:Organization ;
-    rdfs:label "Sky" ;
-    schema:description "A British telecommunications company" .
+example:France
+  a schema:Country ;
+  rdfs:label "France" .
 
-example:BTGroup a schema:Organization ;
-    rdfs:label "BT Group" ;
-    schema:description "A British telecommunications company" .
+example:1889WorldsFair
+  a schema:Event ;
+  rdfs:label "1889 World's Fair" ;
+  schema:location example:Paris ;
+  schema:startDate "1889-05-06" ;
+  schema:endDate "1889-11-12" .
 
-example:ManchesterUnited a schema:SportsTeam ;
-    rdfs:label "Manchester United" ;
-    schema:description "A professional football club based in Manchester" .
+example:MonumentHistorique
+  a schema:Award ;
+  rdfs:label "Monument Historique" .
 
-example:ManchesterCity a schema:SportsTeam ;
-    rdfs:label "Manchester City" ;
-    schema:description "A professional football club based in Manchester" .
-
-example:Chelsea a schema:SportsTeam ;
-    rdfs:label "Chelsea" ;
-    schema:description "A professional football club based in London" .
-
-example:Arsenal a schema:SportsTeam ;
-    rdfs:label "Arsenal" ;
-    schema:description "A professional football club based in London" .
-
-example:BlackburnRovers a schema:SportsTeam ;
-    rdfs:label "Blackburn Rovers" ;
-    schema:description "A professional football club based in Blackburn" .
-
-example:LeicesterCity a schema:SportsTeam ;
-    rdfs:label "Leicester City" ;
-    schema:description "A professional football club based in Leicester" .
-
-example:Liverpool a schema:SportsTeam ;
-    rdfs:label "Liverpool" ;
-    schema:description "A professional football club based in Liverpool" .
-
-# Relations
-example:PremierLeague schema:leagueSystem example:EnglishFootballLeague .
-example:PremierLeague schema:founder example:FA .
-example:PremierLeague schema:hasPart example:ManchesterUnited .
-example:PremierLeague schema:hasPart example:ManchesterCity .
-example:PremierLeague schema:hasPart example:Chelsea .
-example:PremierLeague schema:hasPart example:Arsenal .
-example:PremierLeague schema:hasPart example:BlackburnRovers .
-example:PremierLeague schema:hasPart example:LeicesterCity .
-example:PremierLeague schema:hasPart example:Liverpool .
-example:Sky schema:broadcasts example:PremierLeague .
-example:BTGroup schema:broadcasts example:PremierLeague .
+example:UNESCOWorldHeritageSite
+  a schema:Award ;
+  rdfs:label "UNESCO World Heritage Site" .
 ```
 
-Note: I've used `example.org` as the namespace for the entities, but in a real-world scenario, you would use a more specific namespace for your organization or domain.
+Note: The above Turtle code uses the schema.org vocabulary to describe the Eiffel Tower, Gustave Eiffel, Paris, France, and related concepts. The `example:` prefix is used to denote entities that are not part of the standard schema.org vocabulary.
