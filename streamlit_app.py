@@ -22,6 +22,7 @@ from llamaapi import LlamaAPI
 
 chat_bot_is_on = True
 answer = ""
+api_request_json = {}
 
 st.set_page_config(
     page_title="Text to KG",
@@ -65,7 +66,6 @@ if "edges" not in st.session_state:
 if st.session_state.page_num == 1:
 
     user_text = st.text_area(label=" ", placeholder="Enter some text", height=150, value=st.session_state.user_text or "")
-    #user_text = replace_non_utf8_characters(user_text)
 
     schema_options = st.radio(
         "Choose which schema to use:",
@@ -97,16 +97,24 @@ if st.session_state.page_num == 1:
     if st.session_state.validate_turtle:
 
         if chat_bot_is_on:
-            
-            api_request_json = {
-                "model": "llama3-70b",
-                "messages": [
-                    {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format using Rdfs schema, XML schema ,{schema_options} and example.org for the enteties."},
-                    {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
-                ]
-            }
-            
-                        
+
+            if schema_options == "schema.org":
+                api_request_json = {
+                    "model": "llama3-70b",
+                    "messages": [
+                        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, schema.org. In addition for concepts use example.org."},
+                        {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
+                    ]
+                }
+            elif schema_options == "FHIR":
+                api_request_json = {
+                    "model": "llama3-70b",
+                    "messages": [
+                        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, FHIR. In addition for concepts use example.org and mappings to isd-10."},
+                        {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
+                    ]
+                }
+                       
             response = llama.run(api_request_json)
             answer_content = response.json()["choices"][0]["message"]["content"]
             if check_answer(answer_content):
