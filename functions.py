@@ -155,6 +155,8 @@ def build_graph(ttl_string):
                     if closest_string:
                         nodes.append(Node(id=closest_string, size=20, label=closest_string.split("/")[-1], title=closest_string))
                         made_nodes.add(str(object))
+                    else:
+                        continue
                 else:
                     nodes.append(Node(id=str(object), size=20, label=str(object).split("/")[-1], title=str(object)))
                     made_nodes.add(str(object))
