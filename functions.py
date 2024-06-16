@@ -5,6 +5,16 @@ from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 import re
 import unicodedata
+import asyncio
+
+def get_or_create_event_loop():
+    try:
+        return asyncio.get_event_loop()
+    except RuntimeError as ex:
+        if "There is no current event loop in thread" in str(ex):
+            loop = asyncio.new_event_loop()
+            asyncio.set_event_loop(loop)
+            return loop
 
 def get_answer_from_file(file_name):
     with open(file_name, 'r') as file:
@@ -97,13 +107,23 @@ def replace_non_utf8_characters(text):
     # Return the cleaned text
     return utf8_text
 
-def extract_all_schema_org_things(graph):
-    things = set()
+def extract_all_schema_org_classes(graph):
+    clases = set()
     
-    for subj, _, _ in graph:
-        things.add(str(subj))
+    for subj, _, obj in graph:
+        if str(obj) == "http://www.w3.org/2000/01/rdf-schema#Class":
+            clases.add(str(subj))
         
-    return things
+    return clases
+
+def extract_all_schema_org_properties(graph):
+    properties = set()
+    
+    for subj, _, obj in graph:
+        if str(obj) == "http://www.w3.org/1999/02/22-rdf-syntax-ns#Property":
+            properties.add(str(subj))
+        
+    return properties
 
 def find_closest_string(target_string, string_set, threshold=0.8):
     # Combine the target string with the set of strings for vectorization
@@ -136,7 +156,8 @@ def build_graph(ttl_string):
 
     schema_graph = Graph()
     schema_graph.parse('schemaorg-all.ttl', format='ttl')
-    all_schema_uris = extract_all_schema_org_things(schema_graph)
+    all_schema_classes = extract_all_schema_org_classes(schema_graph)
+    all_schema_properties = extract_all_schema_org_properties(schema_graph)
 
     made_nodes = set()
 
@@ -150,9 +171,9 @@ def build_graph(ttl_string):
                 made_nodes.add(str(subject))
             if isinstance(object, URIRef) and str(object) not in made_nodes:
                 if('schema.org' in str(object)):
-                    closest_string = find_closest_string(str(object), all_schema_uris)
-                    object = URIRef(closest_string)
+                    closest_string = find_closest_string(str(object), all_schema_classes)
                     if closest_string:
+                        object = URIRef(closest_string)
                         nodes.append(Node(id=closest_string, size=20, label=closest_string.split("/")[-1], title=closest_string))
                         made_nodes.add(str(object))
                     else:
@@ -162,15 +183,23 @@ def build_graph(ttl_string):
                     made_nodes.add(str(object))
             if isinstance(object, URIRef):
                 if('schema.org' in str(predicate)):
-                    closest_string = find_closest_string(str(predicate), all_schema_uris)
+                    closest_string = find_closest_string(str(predicate), all_schema_properties)
                     if closest_string:
-                        edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=closest_string.split("/")[-1].split("#")[-1], width=3))
+                        edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=closest_string, width=3))
                 else:
-                    edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=str(predicate).split("/")[-1].split("#")[-1], width=3))
+                    edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=str(predicate), width=3))
             else:
-                for node in nodes:
-                    if node.id == str(subject):
-                        node.title = node.title + "\n\n" + str(predicate) + "\n" + str(object).split("/")[-1]
-                        break
+                if('schema.org' in str(predicate)):
+                    closest_string = find_closest_string(str(predicate), all_schema_properties)
+                    if closest_string:
+                        for node in nodes:
+                            if node.id == str(subject):
+                                node.title = node.title + "\n\n" + str(predicate) + "\n" + str(object).split("/")[-1]
+                                break
+                else:
+                    for node in nodes:
+                        if node.id == str(subject):
+                            node.title = node.title + "\n\n" + str(predicate) + "\n" + str(object).split("/")[-1]
+                            break
 
     return nodes, edges
