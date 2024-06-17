@@ -1,83 +1,69 @@
-Here is the representation of the concepts and relations between them in Turtle format, using RDFS, XML Schema, and FHIR, with example.org namespace and mappings to ICD-10:
+Here is the representation of concepts and relations between them in Turtle format, using RDFS schema, XML schema, schema.org, and example.org:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fhir: <http://hl7.org/fhir/> .
+@prefix schema: <http://schema.org/> .
 @prefix example: <http://example.org/> .
-@prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 
-example:AlzheimersDisease
-  a fhir:Condition ;
-  rdfs:label "Alzheimer's disease" ;
-  fhir:code icd10:G30.9 ;
-  fhir:definition "A condition that affects the brain, characterized by memory loss, language problems, and impulsive or unpredictable behavior." .
+example:VladimirPutin a schema:Person ;
+    rdfs:label "Vladimir Putin" ;
+    schema:title "President of Russia" .
 
-example:Brain
-  a fhir:BodyStructure ;
-  rdfs:label "Brain" ;
-  fhir:partOf example:CentralNervousSystem .
+example:KimJongUn a schema:Person ;
+    rdfs:label "Kim Jong Un" ;
+    schema:title "Supreme Leader of North Korea" .
 
-example:CentralNervousSystem
-  a fhir:BodySystem ;
-  rdfs:label "Central Nervous System" .
+example:Russia a schema:Country ;
+    rdfs:label "Russia" .
 
-example:MemoryLoss
-  a fhir:Symptom ;
-  rdfs:label "Memory Loss" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:NorthKorea a schema:Country ;
+    rdfs:label "North Korea" .
 
-example:LanguageProblems
-  a fhir:Symptom ;
-  rdfs:label "Language Problems" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:Ukraine a schema:Country ;
+    rdfs:label "Ukraine" .
 
-example:ImpulsiveBehavior
-  a fhir:Symptom ;
-  rdfs:label "Impulsive or Unpredictable Behavior" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:Kremlin a schema:GovernmentOrganization ;
+    rdfs:label "The Kremlin" ;
+    schema:location example:Russia .
 
-example:Plaques
-  a fhir:PathologicalProcess ;
-  rdfs:label "Plaques" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:Visit a schema:Event ;
+    rdfs:label "State Visit" ;
+    schema:startDate "2023-04-25"^^xsd:date ;
+    schema:endDate "2023-04-27"^^xsd:date ;
+    schema:location example:NorthKorea ;
+    schema:attendee example:VladimirPutin, example:KimJongUn .
 
-example:Tangles
-  a fhir:PathologicalProcess ;
-  rdfs:label "Tangles" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:PartnershipAgreement a schema:CreativeWork ;
+    rdfs:label "Partnership Agreement" ;
+    schema:creator example:VladimirPutin, example:KimJongUn ;
+    schema:datePublished "2023-04-25"^^xsd:date .
 
-example:Neuron
-  a fhir:Cell ;
-  rdfs:label "Neuron" ;
-  fhir:partOf example:Brain .
+example:SecurityIssues a schema:Topic ;
+    rdfs:label "Security Issues" .
 
-example:NeuronLoss
-  a fhir:PathologicalProcess ;
-  rdfs:label "Loss of Connection between Neurons" ;
-  fhir:associatedWith example:AlzheimersDisease .
+example:MissileProgramme a schema:Topic ;
+    rdfs:label "Long-range Missile Programme" .
 
-example:AloisAlzheimer
-  a fhir:Person ;
-  rdfs:label "Dr. Alois Alzheimer" ;
-  fhir:discovererOf example:AlzheimersDisease .
+example:UkraineWar a schema:Event ;
+    rdfs:label "War in Ukraine" .
 
-example:NationalInstituteOnAging
-  a fhir:Organization ;
-  rdfs:label "National Institute on Aging" ;
-  fhir:publication [
-    a fhir:Publication ;
-    fhir:topic example:AlzheimersDisease ;
-    fhir:assertion "Alzheimer's disease is the sixth leading cause of death in the U.S." ;
-  ] .
+example:SovietUnion a schema:Country ;
+    rdfs:label "Soviet Union" .
+
+example:KimJongIl a schema:Person ;
+    rdfs:label "Kim Jong Il" ;
+    schema:title "Former Supreme Leader of North Korea" .
+
+example:VladimirPutin example:visited example:NorthKorea .
+example:KimJongUn example:invited example:VladimirPutin .
+example:Russia example:hasNeighbor example:NorthKorea .
+example:NorthKorea example:hasNeighbor example:Russia .
+example:UkraineWar example:involves example:Russia .
+example:PartnershipAgreement example:hasTopic example:SecurityIssues .
+example:PartnershipAgreement example:hasTopic example:MissileProgramme .
+example:KimJongUn schema:parent example:KimJongIl .
 ```
 
-Note:
-
-* I used the `fhir:` prefix for FHIR concepts, `xsd:` for XML Schema data types, and `rdfs:` for RDF Schema vocabulary.
-* I created a new namespace `example:` for the concepts and relations specific to this text.
-* I used ICD-10 codes from the FHIR terminology server (`icd10:` prefix) to map the Alzheimer's disease concept to its corresponding ICD-10 code (G30.9).
-* I represented the concepts and relations using RDF triples, following the FHIR data model and vocabulary.
-* I used FHIR resources such as `Condition`, `BodyStructure`, `BodySystem`, `Symptom`, `PathologicalProcess`, `Cell`, and `Person` to represent the concepts.
-* I used FHIR properties such as `code`, `definition`, `partOf`, `associatedWith`, and `discovererOf` to represent the relations between concepts.
+Note: The above representation is a simplified version of the concepts and relations mentioned in the text. Some entities and relationships might not be explicitly mentioned in the text but are implied or can be inferred.

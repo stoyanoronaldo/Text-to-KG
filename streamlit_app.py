@@ -14,6 +14,7 @@ chat_bot_is_on = True
 answer = ""
 api_request_json = {}
 answer_content = ""
+response = None
 
 st.set_page_config(
     page_title="Text to KG",
@@ -93,6 +94,7 @@ if st.session_state.page_num == 1:
                     break
                 except requests.exceptions.JSONDecodeError as e:
                     print(f"Error: {e}")
+                    print()
                     print(response.text)
                     
             """response = llama.run(api_request_json)

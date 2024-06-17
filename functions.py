@@ -185,9 +185,9 @@ def build_graph(ttl_string):
                 if('schema.org' in str(predicate)):
                     closest_string = find_closest_string(str(predicate), all_schema_properties)
                     if closest_string:
-                        edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=closest_string, width=3))
+                        edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=closest_string.split("/")[-1].split("#")[-1], width=3))
                 else:
-                    edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=str(predicate), width=3))
+                    edges.append(Edge(source=str(subject), target=str(object), arrowStrikethrough=False ,label=str(predicate).split("/")[-1].split("#")[-1], width=3))
             else:
                 if('schema.org' in str(predicate)):
                     closest_string = find_closest_string(str(predicate), all_schema_properties)
