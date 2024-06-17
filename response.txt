@@ -1,79 +1,60 @@
-Here is the representation of the concepts and relations between them in Turtle format, using RDFS, XML Schema, and FHIR, with example.org namespace and mappings to ICD-10:
+Here is the representation of the concepts and relations in Turtle format using RDFS, XML Schema, Schema.org, and example.org:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix fhir: <http://hl7.org/fhir/> .
-@prefix example: <http://example.org/> .
-@prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
+@prefix schema: <http://schema.org/> .
+@prefix ex: <http://example.org/> .
 
-example:AlzheimersDisease
-  a fhir:Condition ;
-  rdfs:label "Alzheimer's disease" ;
-  fhir:code icd10:G30.9 ;
-  fhir:subject example:Patient .
+ex:EiffelTower
+  a schema:Landmark ;
+  rdfs:label "Eiffel Tower" ;
+  schema:location ex:Paris ;
+  schema:designer ex:GustaveEiffel ;
+  schema:openingDate "1889"^^xsd:date ;
+  schema:height 300 ;
+  schema:material <http://example.org/WroughtIron> ;
+  schema:description "a technological masterpiece in building-construction history" .
 
-example:Patient
-  a fhir:Patient ;
-  fhir:condition example:AlzheimersDisease .
+ex:GustaveEiffel
+  a schema:Person ;
+  rdfs:label "Gustave Eiffel" ;
+  schema:occupation <http://example.org/BridgeEngineer> .
 
-example:Symptom
-  a fhir:Observation ;
-  rdfs:label "Symptom" ;
-  fhir:code fhir:SymptomCode ;
-  fhir:subject example:Patient .
+ex:Paris
+  a schema:City ;
+  rdfs:label "Paris" .
 
-example:MemoryLoss
-  a example:Symptom ;
-  rdfs:label "Memory Loss" ;
-  fhir:code fhir:MemoryLossCode .
+ex:InternationalExpositionOf1889
+  a schema:Event ;
+  rdfs:label "International Exposition of 1889" ;
+  schema:location ex:Paris ;
+  schema:startDate "1889"^^xsd:date ;
+  schema:endDate "1889"^^xsd:date .
 
-example:LanguageProblems
-  a example:Symptom ;
-  rdfs:label "Language Problems" ;
-  fhir:code fhir:LanguageProblemsCode .
+ex:FrenchGovernment
+  a schema:Government ;
+  rdfs:label "French Government" ;
+  schema:event ex:InternationalExpositionOf1889 .
 
-example:ImpulsiveBehavior
-  a example:Symptom ;
-  rdfs:label "Impulsive or Unpredictable Behavior" ;
-  fhir:code fhir:ImpulsiveBehaviorCode .
+ex:FrenchRevolution
+  a schema:Event ;
+  rdfs:label "French Revolution" ;
+  schema:centenary ex:InternationalExpositionOf1889 .
 
-example:PlaquesAndTangles
-  a fhir:Observation ;
-  rdfs:label "Plaques and Tangles" ;
-  fhir:subject example:Patient .
-
-example:LossOfNeuralConnections
-  a fhir:Observation ;
-  rdfs:label "Loss of Connection between Neurons" ;
-  fhir:subject example:Patient .
-
-example:AloisAlzheimer
-  a foaf:Person ;
-  rdfs:label "Dr. Alois Alzheimer" ;
-  fhir:discoverer example:AlzheimersDisease .
-
-example:NationalInstituteOnAging
-  a foaf:Organization ;
-  rdfs:label "National Institute on Aging" ;
-  fhir:publication example:AlzheimersDiseaseStatistics .
-
-example:AlzheimersDiseaseStatistics
-  a fhir:Publication ;
-  rdfs:label "Alzheimer's Disease Statistics" ;
-  fhir:author example:NationalInstituteOnAging ;
-  fhir:statistic "6th leading cause of death" .
-
-example:RecentEstimates
-  a fhir:Publication ;
-  rdfs:label "Recent Estimates" ;
-  fhir:author example:UnknownAuthor ;
-  fhir:statistic "3rd leading cause of death" .
+ex:CentennialCommittee
+  a schema:Organization ;
+  rdfs:label "Centennial Committee" ;
+  schema:event ex:InternationalExpositionOf1889 .
 ```
 
 Note:
 
-* `foaf` prefix is not defined, but it's commonly used for FOAF (Friend of a Friend) vocabulary, which is used to describe people and their relationships.
-* `fhir:SymptomCode`, `fhir:MemoryLossCode`, `fhir:LanguageProblemsCode`, and `fhir:ImpulsiveBehaviorCode` are not real FHIR codes, but rather placeholders for actual codes that would be used in a real-world implementation.
-* `example:UnknownAuthor` is a placeholder for the actual author of the recent estimates publication.
+* I used `example.org` as the namespace for custom concepts and relations.
+* I used `schema.org` for common concepts like `Landmark`, `Person`, `City`, `Event`, `Government`, and `Organization`.
+* I used `xsd` for data types like `date`.
+* I used `rdfs` for RDF schema concepts like `label`.
+* I used `rdf` for RDF concepts like `type`.
+
+Please note that this is one possible representation, and there are many ways to model the same data.

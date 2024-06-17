@@ -1,4 +1,4 @@
-@prefix foaf: <http://xmlns.com/foaf/0.1/> .
+@prefix owl: <http://www.w3.org/2002/07/owl#>  .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
@@ -7,65 +7,59 @@
 @prefix example:<http://example.org/> .
 @prefix icd10:<http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:AlzheimersDisease
+example:Michigan_Department_of_Health_and_Human_Services
+  a fhir:Organization ;
+  rdfs:label "Michigan Department of Health and Human Services" .
+
+example:US_Centers_for_Disease_Control_and_Prevention
+  a fhir:Organization ;
+  rdfs:label "US Centers for Disease Control and Prevention" .
+
+example:Michigan
+  a fhir:Location ;
+  rdfs:label "Michigan" .
+
+example:Avian_Influenza
   a fhir:Condition ;
-  rdfs:label "Alzheimer's disease" ;
-  fhir:code icd10:G30.9 ;
-  fhir:subject example:Patient .
+  rdfs:label "Avian Influenza" ;
+  icd10:code "J09.X" .
 
-example:Patient
-  a fhir:Patient ;
-  fhir:condition example:AlzheimersDisease .
+example:Bird_Flu
+  a fhir:Condition ;
+  rdfs:label "Bird Flu" ;
+  owl:sameAs example:Avian_Influenza .
 
-example:Symptom
-  a fhir:Observation ;
-  rdfs:label "Symptom" ;
-  fhir:code fhir:SymptomCode ;
-  fhir:subject example:Patient .
+example:H5_Influenza
+  a fhir:Condition ;
+  rdfs:label "H5 Influenza" ;
+  owl:sameAs example:Avian_Influenza .
 
-example:MemoryLoss
-  a example:Symptom ;
-  rdfs:label "Memory Loss" ;
-  fhir:code fhir:MemoryLossCode .
+example:Farm_Worker
+  a fhir:Practitioner ;
+  rdfs:label "Farm Worker" .
 
-example:LanguageProblems
-  a example:Symptom ;
-  rdfs:label "Language Problems" ;
-  fhir:code fhir:LanguageProblemsCode .
+example:Case_Report
+  a fhir:DiagnosticReport ;
+  rdfs:label "Case Report" ;
+  fhir:subject example:Farm_Worker ;
+  fhir:result example:Avian_Influenza .
 
-example:ImpulsiveBehavior
-  a example:Symptom ;
-  rdfs:label "Impulsive or Unpredictable Behavior" ;
-  fhir:code fhir:ImpulsiveBehaviorCode .
+example:Ongoing_Outbreak
+  a fhir:EpisodeOfCare ;
+  rdfs:label "Ongoing Outbreak" ;
+  fhir:condition example:Avian_Influenza ;
+  fhir:location example:Michigan .
 
-example:PlaquesAndTangles
-  a fhir:Observation ;
-  rdfs:label "Plaques and Tangles" ;
-  fhir:subject example:Patient .
+example:Health_Officials
+  a fhir:Practitioner ;
+  rdfs:label "Health Officials" .
 
-example:LossOfNeuralConnections
-  a fhir:Observation ;
-  rdfs:label "Loss of Connection between Neurons" ;
-  fhir:subject example:Patient .
+example:Low_Risk
+  a fhir:RiskAssessment ;
+  rdfs:label "Low Risk" ;
+  fhir:subject example:General_Public ;
+  fhir:assessment example:Avian_Influenza .
 
-example:AloisAlzheimer
-  a foaf:Person ;
-  rdfs:label "Dr. Alois Alzheimer" ;
-  fhir:discoverer example:AlzheimersDisease .
-
-example:NationalInstituteOnAging
-  a foaf:Organization ;
-  rdfs:label "National Institute on Aging" ;
-  fhir:publication example:AlzheimersDiseaseStatistics .
-
-example:AlzheimersDiseaseStatistics
-  a fhir:Publication ;
-  rdfs:label "Alzheimer's Disease Statistics" ;
-  fhir:author example:NationalInstituteOnAging ;
-  fhir:statistic "6th leading cause of death" .
-
-example:RecentEstimates
-  a fhir:Publication ;
-  rdfs:label "Recent Estimates" ;
-  fhir:author example:UnknownAuthor ;
-  fhir:statistic "3rd leading cause of death" .
+example:General_Public
+  a fhir:Group ;
+  rdfs:label "General Public" .

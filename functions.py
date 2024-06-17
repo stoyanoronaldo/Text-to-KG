@@ -88,10 +88,10 @@ def text_has_owl(text):
     return "owl" in text
 
 def text_has_owl_prefix(text):
-    return "@prefix f: <http://example.com/owl/families#> ." in text
+    return "@prefix owl: <http://www.w3.org/2002/07/owl#> ." in text
 
 def add_owl_prefix(text):
-    text = "@prefix f: <http://example.com/owl/families#>  ." + "\n" + text
+    text = "@prefix owl: <http://www.w3.org/2002/07/owl#>  ." + "\n" + text
     return text
 
 def fix_turtle_syntax_string(input_string):
