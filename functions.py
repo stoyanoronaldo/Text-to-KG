@@ -74,6 +74,26 @@ def add_xsd_prefix(text):
     text = "@prefix xsd: <http://www.w3.org/2001/XMLSchema#> ." + "\n" + text
     return text
 
+def text_has_foaf(text):
+    return "foaf" in text
+
+def text_has_foaf_prefix(text):
+    return "@prefix foaf: <http://xmlns.com/foaf/0.1/> ." in text
+
+def add_foaf_prefix(text):
+    text = "@prefix foaf: <http://xmlns.com/foaf/0.1/> ." + "\n" + text
+    return text
+
+def text_has_owl(text):
+    return "owl" in text
+
+def text_has_owl_prefix(text):
+    return "@prefix f: <http://example.com/owl/families#> ." in text
+
+def add_owl_prefix(text):
+    text = "@prefix f: <http://example.com/owl/families#>  ." + "\n" + text
+    return text
+
 def fix_turtle_syntax_string(input_string):
     # Fix common Turtle syntax issues
     # Ensure proper spacing around colons
@@ -83,6 +103,12 @@ def fix_turtle_syntax_string(input_string):
 
     if text_has_xsd(fixed_string) and (not(text_has_xsd_prefix(fixed_string))):
         fixed_string = add_xsd_prefix(fixed_string)
+
+    if text_has_foaf(fixed_string) and (not(text_has_foaf_prefix(fixed_string))):
+        fixed_string = add_foaf_prefix(fixed_string)
+
+    if text_has_owl(fixed_string) and (not(text_has_owl_prefix(fixed_string))):
+        fixed_string = add_owl_prefix(fixed_string)
     
     # Ensure quotes are properly closed
     #fixed_string = re.sub(r'\"([^\"]*)\"', r'"\1"', fixed_string)

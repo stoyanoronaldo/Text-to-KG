@@ -1,4 +1,71 @@
+@prefix foaf: <http://xmlns.com/foaf/0.1/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
 @prefix rdf:<http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:<http://www.w3.org/2000/01/rdf-schema#> .
-@prefix xsd:<http://www.w3
+@prefix xsd:<http://www.w3.org/2001/XMLSchema#> .
+@prefix fhir:<http://hl7.org/fhir/> .
+@prefix example:<http://example.org/> .
+@prefix icd10:<http://hl7.org/fhir/sid/icd-10-cm/> .
+
+example:AlzheimersDisease
+  a fhir:Condition ;
+  rdfs:label "Alzheimer's disease" ;
+  fhir:code icd10:G30.9 ;
+  fhir:subject example:Patient .
+
+example:Patient
+  a fhir:Patient ;
+  fhir:condition example:AlzheimersDisease .
+
+example:Symptom
+  a fhir:Observation ;
+  rdfs:label "Symptom" ;
+  fhir:code fhir:SymptomCode ;
+  fhir:subject example:Patient .
+
+example:MemoryLoss
+  a example:Symptom ;
+  rdfs:label "Memory Loss" ;
+  fhir:code fhir:MemoryLossCode .
+
+example:LanguageProblems
+  a example:Symptom ;
+  rdfs:label "Language Problems" ;
+  fhir:code fhir:LanguageProblemsCode .
+
+example:ImpulsiveBehavior
+  a example:Symptom ;
+  rdfs:label "Impulsive or Unpredictable Behavior" ;
+  fhir:code fhir:ImpulsiveBehaviorCode .
+
+example:PlaquesAndTangles
+  a fhir:Observation ;
+  rdfs:label "Plaques and Tangles" ;
+  fhir:subject example:Patient .
+
+example:LossOfNeuralConnections
+  a fhir:Observation ;
+  rdfs:label "Loss of Connection between Neurons" ;
+  fhir:subject example:Patient .
+
+example:AloisAlzheimer
+  a foaf:Person ;
+  rdfs:label "Dr. Alois Alzheimer" ;
+  fhir:discoverer example:AlzheimersDisease .
+
+example:NationalInstituteOnAging
+  a foaf:Organization ;
+  rdfs:label "National Institute on Aging" ;
+  fhir:publication example:AlzheimersDiseaseStatistics .
+
+example:AlzheimersDiseaseStatistics
+  a fhir:Publication ;
+  rdfs:label "Alzheimer's Disease Statistics" ;
+  fhir:author example:NationalInstituteOnAging ;
+  fhir:statistic "6th leading cause of death" .
+
+example:RecentEstimates
+  a fhir:Publication ;
+  rdfs:label "Recent Estimates" ;
+  fhir:author example:UnknownAuthor ;
+  fhir:statistic "3rd leading cause of death" .

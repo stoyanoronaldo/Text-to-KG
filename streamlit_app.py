@@ -96,9 +96,6 @@ if st.session_state.page_num == 1:
                     print(f"Error: {e}")
                     print()
                     print(response.text)
-                    
-            """response = llama.run(api_request_json)
-            answer_content = response.json()["choices"][0]["message"]["content"]"""
 
             if check_answer(answer_content):
                 save_answer_to_file(answer_content, 'response.txt')
@@ -126,6 +123,7 @@ if st.session_state.page_num == 1:
             answer = fix_turtle_syntax_string(answer)
             save_answer_to_file(answer, 'test.ttl')
             st.write("<font color='green'>Trying to fix the error</font>", unsafe_allow_html=True)
+            is_valid_ttl, is_valid_string = is_valid_turtle(answer)
             if is_valid_ttl:
                 st.session_state.is_valid_turtle = True
                 st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
@@ -137,7 +135,6 @@ if st.session_state.page_num == 1:
             else:
                 st.write("<font color='red'>Couldn't fix it</font>", unsafe_allow_html=True)
     elif get_answer_btn and not user_text:
-        st.session_state.button_clicked = False
         st.write("<font color='red'>Please enter some text.</font>", unsafe_allow_html=True)
         
 elif st.session_state.page_num == 2:

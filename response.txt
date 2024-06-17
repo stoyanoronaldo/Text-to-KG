@@ -1,69 +1,79 @@
-Here is the representation of concepts and relations between them in Turtle format, using RDFS schema, XML schema, schema.org, and example.org:
+Here is the representation of the concepts and relations between them in Turtle format, using RDFS, XML Schema, and FHIR, with example.org namespace and mappings to ICD-10:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
-@prefix example: <http://example.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix example: <http://example.org/> .
+@prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:VladimirPutin a schema:Person ;
-    rdfs:label "Vladimir Putin" ;
-    schema:title "President of Russia" .
+example:AlzheimersDisease
+  a fhir:Condition ;
+  rdfs:label "Alzheimer's disease" ;
+  fhir:code icd10:G30.9 ;
+  fhir:subject example:Patient .
 
-example:KimJongUn a schema:Person ;
-    rdfs:label "Kim Jong Un" ;
-    schema:title "Supreme Leader of North Korea" .
+example:Patient
+  a fhir:Patient ;
+  fhir:condition example:AlzheimersDisease .
 
-example:Russia a schema:Country ;
-    rdfs:label "Russia" .
+example:Symptom
+  a fhir:Observation ;
+  rdfs:label "Symptom" ;
+  fhir:code fhir:SymptomCode ;
+  fhir:subject example:Patient .
 
-example:NorthKorea a schema:Country ;
-    rdfs:label "North Korea" .
+example:MemoryLoss
+  a example:Symptom ;
+  rdfs:label "Memory Loss" ;
+  fhir:code fhir:MemoryLossCode .
 
-example:Ukraine a schema:Country ;
-    rdfs:label "Ukraine" .
+example:LanguageProblems
+  a example:Symptom ;
+  rdfs:label "Language Problems" ;
+  fhir:code fhir:LanguageProblemsCode .
 
-example:Kremlin a schema:GovernmentOrganization ;
-    rdfs:label "The Kremlin" ;
-    schema:location example:Russia .
+example:ImpulsiveBehavior
+  a example:Symptom ;
+  rdfs:label "Impulsive or Unpredictable Behavior" ;
+  fhir:code fhir:ImpulsiveBehaviorCode .
 
-example:Visit a schema:Event ;
-    rdfs:label "State Visit" ;
-    schema:startDate "2023-04-25"^^xsd:date ;
-    schema:endDate "2023-04-27"^^xsd:date ;
-    schema:location example:NorthKorea ;
-    schema:attendee example:VladimirPutin, example:KimJongUn .
+example:PlaquesAndTangles
+  a fhir:Observation ;
+  rdfs:label "Plaques and Tangles" ;
+  fhir:subject example:Patient .
 
-example:PartnershipAgreement a schema:CreativeWork ;
-    rdfs:label "Partnership Agreement" ;
-    schema:creator example:VladimirPutin, example:KimJongUn ;
-    schema:datePublished "2023-04-25"^^xsd:date .
+example:LossOfNeuralConnections
+  a fhir:Observation ;
+  rdfs:label "Loss of Connection between Neurons" ;
+  fhir:subject example:Patient .
 
-example:SecurityIssues a schema:Topic ;
-    rdfs:label "Security Issues" .
+example:AloisAlzheimer
+  a foaf:Person ;
+  rdfs:label "Dr. Alois Alzheimer" ;
+  fhir:discoverer example:AlzheimersDisease .
 
-example:MissileProgramme a schema:Topic ;
-    rdfs:label "Long-range Missile Programme" .
+example:NationalInstituteOnAging
+  a foaf:Organization ;
+  rdfs:label "National Institute on Aging" ;
+  fhir:publication example:AlzheimersDiseaseStatistics .
 
-example:UkraineWar a schema:Event ;
-    rdfs:label "War in Ukraine" .
+example:AlzheimersDiseaseStatistics
+  a fhir:Publication ;
+  rdfs:label "Alzheimer's Disease Statistics" ;
+  fhir:author example:NationalInstituteOnAging ;
+  fhir:statistic "6th leading cause of death" .
 
-example:SovietUnion a schema:Country ;
-    rdfs:label "Soviet Union" .
-
-example:KimJongIl a schema:Person ;
-    rdfs:label "Kim Jong Il" ;
-    schema:title "Former Supreme Leader of North Korea" .
-
-example:VladimirPutin example:visited example:NorthKorea .
-example:KimJongUn example:invited example:VladimirPutin .
-example:Russia example:hasNeighbor example:NorthKorea .
-example:NorthKorea example:hasNeighbor example:Russia .
-example:UkraineWar example:involves example:Russia .
-example:PartnershipAgreement example:hasTopic example:SecurityIssues .
-example:PartnershipAgreement example:hasTopic example:MissileProgramme .
-example:KimJongUn schema:parent example:KimJongIl .
+example:RecentEstimates
+  a fhir:Publication ;
+  rdfs:label "Recent Estimates" ;
+  fhir:author example:UnknownAuthor ;
+  fhir:statistic "3rd leading cause of death" .
 ```
 
-Note: The above representation is a simplified version of the concepts and relations mentioned in the text. Some entities and relationships might not be explicitly mentioned in the text but are implied or can be inferred.
+Note:
+
+* `foaf` prefix is not defined, but it's commonly used for FOAF (Friend of a Friend) vocabulary, which is used to describe people and their relationships.
+* `fhir:SymptomCode`, `fhir:MemoryLossCode`, `fhir:LanguageProblemsCode`, and `fhir:ImpulsiveBehaviorCode` are not real FHIR codes, but rather placeholders for actual codes that would be used in a real-world implementation.
+* `example:UnknownAuthor` is a placeholder for the actual author of the recent estimates publication.
