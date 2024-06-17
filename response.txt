@@ -1,66 +1,83 @@
-Here are the concepts and relations between them in Turtle format using RDFS schema, XML schema, schema.org, and example.org for the entities:
+Here is the representation of the concepts and relations between them in Turtle format, using RDFS, XML Schema, and FHIR, with example.org namespace and mappings to ICD-10:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
-@prefix schema: <http://schema.org/> .
-@prefix example: <http://example.org/> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix example: <http://example.org/> .
+@prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:EiffelTower
-  a schema:Landmark, schema:TouristAttraction ;
-  rdfs:label "Eiffel Tower" ;
-  schema:description "A wrought-iron lattice tower on the Champ de Mars in Paris, France" ;
-  schema:location example:Paris ;
-  schema:address "Champ de Mars, 5 Avenue Anatole France, 75007 Paris, France" ;
-  schema:geo [ 
-    schema:latitude "48.8583" ;
-    schema:longitude "2.2943" ;
-  ] ;
-  schema:openingHours "Daily 9:30 AM - 11:45 PM" ;
-  schema:creator example:GustaveEiffel ;
-  schema:designer example:GustaveEiffel ;
-  schema:builder example:GustaveEiffel ;
-  schema:constructionStarted "1887" ;
-  schema:constructionFinished "1889" ;
-  schema:event example:1889WorldsFair ;
-  schema:award example:MonumentHistorique ;
-  schema:award example:UNESCOWorldHeritageSite ;
-  schema:alternateName "La dame de fer" ;
-  schema:alternateName "Iron Lady" ;
-  schema:visitedBy 5889000 ;
-  schema:visitedBy 6910000 .
+example:AlzheimersDisease
+  a fhir:Condition ;
+  rdfs:label "Alzheimer's disease" ;
+  fhir:code icd10:G30.9 ;
+  fhir:definition "A condition that affects the brain, characterized by memory loss, language problems, and impulsive or unpredictable behavior." .
 
-example:GustaveEiffel
-  a schema:Person ;
-  rdfs:label "Gustave Eiffel" ;
-  schema:birthDate "1832-12-15" ;
-  schema:deathDate "1923-12-31" ;
-  schema:nationality "French" .
+example:Brain
+  a fhir:BodyStructure ;
+  rdfs:label "Brain" ;
+  fhir:partOf example:CentralNervousSystem .
 
-example:Paris
-  a schema:City ;
-  rdfs:label "Paris" ;
-  schema:country example:France .
+example:CentralNervousSystem
+  a fhir:BodySystem ;
+  rdfs:label "Central Nervous System" .
 
-example:France
-  a schema:Country ;
-  rdfs:label "France" .
+example:MemoryLoss
+  a fhir:Symptom ;
+  rdfs:label "Memory Loss" ;
+  fhir:associatedWith example:AlzheimersDisease .
 
-example:1889WorldsFair
-  a schema:Event ;
-  rdfs:label "1889 World's Fair" ;
-  schema:location example:Paris ;
-  schema:startDate "1889-05-06" ;
-  schema:endDate "1889-11-12" .
+example:LanguageProblems
+  a fhir:Symptom ;
+  rdfs:label "Language Problems" ;
+  fhir:associatedWith example:AlzheimersDisease .
 
-example:MonumentHistorique
-  a schema:Award ;
-  rdfs:label "Monument Historique" .
+example:ImpulsiveBehavior
+  a fhir:Symptom ;
+  rdfs:label "Impulsive or Unpredictable Behavior" ;
+  fhir:associatedWith example:AlzheimersDisease .
 
-example:UNESCOWorldHeritageSite
-  a schema:Award ;
-  rdfs:label "UNESCO World Heritage Site" .
+example:Plaques
+  a fhir:PathologicalProcess ;
+  rdfs:label "Plaques" ;
+  fhir:associatedWith example:AlzheimersDisease .
+
+example:Tangles
+  a fhir:PathologicalProcess ;
+  rdfs:label "Tangles" ;
+  fhir:associatedWith example:AlzheimersDisease .
+
+example:Neuron
+  a fhir:Cell ;
+  rdfs:label "Neuron" ;
+  fhir:partOf example:Brain .
+
+example:NeuronLoss
+  a fhir:PathologicalProcess ;
+  rdfs:label "Loss of Connection between Neurons" ;
+  fhir:associatedWith example:AlzheimersDisease .
+
+example:AloisAlzheimer
+  a fhir:Person ;
+  rdfs:label "Dr. Alois Alzheimer" ;
+  fhir:discovererOf example:AlzheimersDisease .
+
+example:NationalInstituteOnAging
+  a fhir:Organization ;
+  rdfs:label "National Institute on Aging" ;
+  fhir:publication [
+    a fhir:Publication ;
+    fhir:topic example:AlzheimersDisease ;
+    fhir:assertion "Alzheimer's disease is the sixth leading cause of death in the U.S." ;
+  ] .
 ```
 
-Note: The above Turtle code uses the schema.org vocabulary to describe the Eiffel Tower, Gustave Eiffel, Paris, France, and related concepts. The `example:` prefix is used to denote entities that are not part of the standard schema.org vocabulary.
+Note:
+
+* I used the `fhir:` prefix for FHIR concepts, `xsd:` for XML Schema data types, and `rdfs:` for RDF Schema vocabulary.
+* I created a new namespace `example:` for the concepts and relations specific to this text.
+* I used ICD-10 codes from the FHIR terminology server (`icd10:` prefix) to map the Alzheimer's disease concept to its corresponding ICD-10 code (G30.9).
+* I represented the concepts and relations using RDF triples, following the FHIR data model and vocabulary.
+* I used FHIR resources such as `Condition`, `BodyStructure`, `BodySystem`, `Symptom`, `PathologicalProcess`, `Cell`, and `Person` to represent the concepts.
+* I used FHIR properties such as `code`, `definition`, `partOf`, `associatedWith`, and `discovererOf` to represent the relations between concepts.

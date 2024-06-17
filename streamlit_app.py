@@ -2,6 +2,7 @@ from functions import *
 import streamlit as st
 import streamlit_agraph
 from streamlit_agraph import Config
+import requests
 
 # Ensure an event loop is created before importing llamaapi
 loop = get_or_create_event_loop()
@@ -12,6 +13,7 @@ from llamaapi import LlamaAPI
 chat_bot_is_on = True
 answer = ""
 api_request_json = {}
+answer_content = ""
 
 st.set_page_config(
     page_title="Text to KG",
@@ -37,9 +39,6 @@ if 'answer' not in st.session_state:
 if 'user_text' not in st.session_state:
     st.session_state.user_text = None
 
-if 'btn_clicked' not in st.session_state:
-    st.session_state.btn_clicked = False
-
 if "is_valid_turtle" not in st.session_state:
     st.session_state.is_valid_turtle = False
 
@@ -62,46 +61,69 @@ if st.session_state.page_num == 1:
     #llama = LlamaAPI(os.environ.get("LLAMA_API_KEY"))
     llama = LlamaAPI("LL-oZZ3DbV8EBPzVAdh7ylv5pQP3y0ryH77l7x50ELwEzDymcHuVOA3BnhH66HdFIZh")
 
-    def button_click():
-        st.session_state.button_clicked = True
+    get_answer_btn = st.button("Get Answer")
+    if get_answer_btn and user_text:
+        st.session_state.user_text = user_text
 
-    if not st.session_state.btn_clicked:
-        get_answer_btn = st.button("Get Answer", on_click=button_click)
-        if get_answer_btn  and user_text:
-            st.session_state.user_text = user_text
+        if chat_bot_is_on:
+            if schema_options == "schema.org":
+                api_request_json = {
+                    "model": "llama3-70b",
+                    "max_tokens": 10000,
+                    "messages": [
+                        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, schema.org. In addition for concepts use example.org."},
+                        {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
+                    ]
+                }
+            elif schema_options == "FHIR":
+                api_request_json = {
+                    "model": "llama3-70b",
+                    "max_tokens": 10000,
+                    "messages": [
+                        {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, FHIR. In addition for concepts use example.org and mappings to icd-10."},
+                        {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
+                    ]
+                }
 
-            if chat_bot_is_on:
-                if schema_options == "schema.org":
-                    api_request_json = {
-                        "model": "llama3-70b",
-                        "messages": [
-                            {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, schema.org. In addition for concepts use example.org."},
-                            {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
-                        ]
-                    }
-                elif schema_options == "FHIR":
-                    api_request_json = {
-                        "model": "llama3-70b",
-                        "messages": [
-                            {"role": "system", "content": f"For the given text provide all concepts and relations between them in turtle format. Use Rdfs schema, XML schema, FHIR. In addition for concepts use example.org and mappings to icd-10."},
-                            {"role": "user", "content": f"Text: {replace_non_utf8_characters(user_text)}"},
-                        ]
-                    }
-                        
-                response = llama.run(api_request_json)
-                answer_content = response.json()["choices"][0]["message"]["content"]
-                if check_answer(answer_content):
-                    save_answer_to_file(answer_content, 'response.txt')
-                    answer = get_answer_from_string(answer_content)
-                else:
-                    answer_content = fix_answer(answer_content)
-                    save_answer_to_file(answer_content, 'response.txt')
-                    answer = get_answer_from_string(answer_content)
+            while True:
+                try:
+                    response = llama.run(api_request_json)
+                    response.raise_for_status()
+                    answer_content = response.json()["choices"][0]["message"]["content"]
+                    break
+                except requests.exceptions.JSONDecodeError as e:
+                    print(f"Error: {e}")
+                    print(response.text)
+                    
+            """response = llama.run(api_request_json)
+            answer_content = response.json()["choices"][0]["message"]["content"]"""
+
+            if check_answer(answer_content):
+                save_answer_to_file(answer_content, 'response.txt')
+                answer = get_answer_from_string(answer_content)
             else:
-                answer = get_answer_from_file('response.txt')
+                answer_content = fix_answer(answer_content)
+                save_answer_to_file(answer_content, 'response.txt')
+                answer = get_answer_from_string(answer_content)
+        else:
+            answer = get_answer_from_file('response.txt')
 
-            is_valid_ttl, is_valid_string = is_valid_turtle(answer)
+        is_valid_ttl, is_valid_string = is_valid_turtle(answer)
 
+        if is_valid_ttl:
+            st.session_state.is_valid_turtle = True
+            st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
+            with st.expander("View turtle"):
+                st.code(answer, language="turtle")
+            st.session_state.answer = answer
+            st.session_state.nodes = None
+            st.session_state.edges = None
+        else:
+            st.write(f"<font color='red'>{is_valid_string}</font>", unsafe_allow_html=True)
+            answer = fix_uris_string(answer)
+            answer = fix_turtle_syntax_string(answer)
+            save_answer_to_file(answer, 'test.ttl')
+            st.write("<font color='green'>Trying to fix the error</font>", unsafe_allow_html=True)
             if is_valid_ttl:
                 st.session_state.is_valid_turtle = True
                 st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
@@ -111,27 +133,12 @@ if st.session_state.page_num == 1:
                 st.session_state.nodes = None
                 st.session_state.edges = None
             else:
-                st.write(f"<font color='red'>{is_valid_string}</font>", unsafe_allow_html=True)
-                answer = fix_uris_string(answer)
-                answer = fix_turtle_syntax_string(answer)
-                save_answer_to_file(answer, 'test.ttl')
-                st.write("<font color='green'>Trying to fix the error</font>", unsafe_allow_html=True)
-                if is_valid_ttl:
-                    st.session_state.is_valid_turtle = True
-                    st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
-                    with st.expander("View turtle"):
-                        st.code(answer, language="turtle")
-                    st.session_state.answer = answer
-                    st.session_state.nodes = None
-                    st.session_state.edges = None
-        elif get_answer_btn and not user_text:
-            st.session_state.button_clicked = False
-            st.write("<font color='red'>Please enter some text.</font>", unsafe_allow_html=True)
+                st.write("<font color='red'>Couldn't fix it</font>", unsafe_allow_html=True)
+    elif get_answer_btn and not user_text:
+        st.session_state.button_clicked = False
+        st.write("<font color='red'>Please enter some text.</font>", unsafe_allow_html=True)
         
-    
-
 elif st.session_state.page_num == 2:
-    st.session_state.btn_clicked = False
     if st.session_state.is_valid_turtle:
         answer = st.session_state.answer
         st.session_state.answer = None
