@@ -101,6 +101,8 @@ def fix_turtle_syntax_string(input_string):
 
     fixed_string = re.sub(r'(example:[^\s]+)\s([^\s]+) (a schema:)', r'\1_\2 \3', fixed_string, flags=re.MULTILINE)
 
+    fixed_string = re.sub(r'(xsd:integer\s)([0-9]+)', r'"\2"^^\1', fixed_string)
+
     if text_has_xsd(fixed_string) and (not(text_has_xsd_prefix(fixed_string))):
         fixed_string = add_xsd_prefix(fixed_string)
 

@@ -7,59 +7,78 @@
 @prefix example:<http://example.org/> .
 @prefix icd10:<http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:Michigan_Department_of_Health_and_Human_Services
-  a fhir:Organization ;
-  rdfs:label "Michigan Department of Health and Human Services" .
+example:AlzheimersDisease
+  a rdfs:Class ;
+  rdfs:label "Alzheimer's disease" ;
+  rdfs:comment "A degenerative brain disorder" ;
+  fhir:code icd10:G30.9 .
 
-example:US_Centers_for_Disease_Control_and_Prevention
-  a fhir:Organization ;
-  rdfs:label "US Centers for Disease Control and Prevention" .
+example:DegenerativeBrainDisorder
+  a rdfs:Class ;
+  rdfs:label "Degenerative brain disorder" ;
+  rdfs:subClassOf example:BrainDisorder .
 
-example:Michigan
-  a fhir:Location ;
-  rdfs:label "Michigan" .
+example:BrainDisorder
+  a rdfs:Class ;
+  rdfs:label "Brain disorder" .
 
-example:Avian_Influenza
-  a fhir:Condition ;
-  rdfs:label "Avian Influenza" ;
-  icd10:code "J09.X" .
+example:MediterraneanDiet
+  a rdfs:Class ;
+  rdfs:label "Mediterranean diet" ;
+  rdfs:comment "A diet that may protect against Alzheimer's" .
 
-example:Bird_Flu
-  a fhir:Condition ;
-  rdfs:label "Bird Flu" ;
-  owl:sameAs example:Avian_Influenza .
+example:MINDiet
+  a rdfs:Class ;
+  rdfs:label "MIND diet" ;
+  rdfs:comment "A diet that may protect against Alzheimer's" .
 
-example:H5_Influenza
-  a fhir:Condition ;
-  rdfs:label "H5 Influenza" ;
-  owl:sameAs example:Avian_Influenza .
+example:InflammatorySaturatedFats
+  a rdfs:Class ;
+  rdfs:label "Inflammatory saturated fats" ;
+  rdfs:comment "A type of fat that may contribute to Alzheimer's" .
 
-example:Farm_Worker
-  a fhir:Practitioner ;
-  rdfs:label "Farm Worker" .
+example:Vitamins
+  a rdfs:Class ;
+  rdfs:label "Vitamins" ;
+  rdfs:comment "Nutrients that may help protect against Alzheimer's" .
 
-example:Case_Report
-  a fhir:DiagnosticReport ;
-  rdfs:label "Case Report" ;
-  fhir:subject example:Farm_Worker ;
-  fhir:result example:Avian_Influenza .
+example:Minerals
+  a rdfs:Class ;
+  rdfs:label "Minerals" ;
+  rdfs:comment "Nutrients that may help protect against Alzheimer's" .
 
-example:Ongoing_Outbreak
-  a fhir:EpisodeOfCare ;
-  rdfs:label "Ongoing Outbreak" ;
-  fhir:condition example:Avian_Influenza ;
-  fhir:location example:Michigan .
+example:Omega3s
+  a rdfs:Class ;
+  rdfs:label "Omega-3s" ;
+  rdfs:comment "Nutrients that may help protect against Alzheimer's" .
 
-example:Health_Officials
-  a fhir:Practitioner ;
-  rdfs:label "Health Officials" .
+example:Antioxidants
+  a rdfs:Class ;
+  rdfs:label "Antioxidants" ;
+  rdfs:comment "Nutrients that may help protect against Alzheimer's" .
 
-example:Low_Risk
-  a fhir:RiskAssessment ;
-  rdfs:label "Low Risk" ;
-  fhir:subject example:General_Public ;
-  fhir:assessment example:Avian_Influenza .
+example:OxidativeStress
+  a rdfs:Class ;
+  rdfs:label "Oxidative stress" ;
+  rdfs:comment "A condition associated with Alzheimer's" .
 
-example:General_Public
-  a fhir:Group ;
-  rdfs:label "General Public" .
+example:FreeRadicalDamage
+  a rdfs:Class ;
+  rdfs:label "Free radical damage" ;
+  rdfs:comment "A type of damage associated with oxidative stress" .
+
+example:AntioxidantIntake
+  a rdfs:Class ;
+  rdfs:label "Antioxidant intake" ;
+  rdfs:comment "A potential protective factor against Alzheimer's" .
+
+example:AlzheimersDisease a owl:Class ;
+  rdfs:subClassOf example:DegenerativeBrainDisorder ;
+  fhir:hasRiskFactor example:InflammatorySaturatedFats ;
+  fhir:hasProtectiveFactor example:AntioxidantIntake ;
+  fhir:hasAssociatedDisease example:Dementia .
+
+example:Dementia
+  a rdfs:Class ;
+  rdfs:label "Dementia" ;
+  rdfs:comment "A condition associated with Alzheimer's" .

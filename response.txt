@@ -1,60 +1,87 @@
-Here is the representation of the concepts and relations in Turtle format using RDFS, XML Schema, Schema.org, and example.org:
+Here is the representation of the concepts and relations between them in Turtle format, using RDFS schema, XML schema, and FHIR:
 
 ```
 @prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
-@prefix schema: <http://schema.org/> .
-@prefix ex: <http://example.org/> .
+@prefix fhir: <http://hl7.org/fhir/> .
+@prefix example: <http://example.org/> .
+@prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
 
-ex:EiffelTower
-  a schema:Landmark ;
-  rdfs:label "Eiffel Tower" ;
-  schema:location ex:Paris ;
-  schema:designer ex:GustaveEiffel ;
-  schema:openingDate "1889"^^xsd:date ;
-  schema:height 300 ;
-  schema:material <http://example.org/WroughtIron> ;
-  schema:description "a technological masterpiece in building-construction history" .
+example:AlzheimersDisease
+  a fhir:Condition ;
+  rdfs:label "Alzheimer's disease" ;
+  rdfs:comment "A degenerative brain disorder" ;
+  fhir:code icd10:G30.9 .
 
-ex:GustaveEiffel
-  a schema:Person ;
-  rdfs:label "Gustave Eiffel" ;
-  schema:occupation <http://example.org/BridgeEngineer> .
+example:DegenerativeBrainDisorder
+  a rdfs:Class ;
+  rdfs:label "Degenerative brain disorder" ;
+  rdfs:subClassOf fhir:Condition .
 
-ex:Paris
-  a schema:City ;
-  rdfs:label "Paris" .
+example:AgeOver65
+  a rdfs:Class ;
+  rdfs:label "Age over 65" ;
+  rdfs:comment "Primarily affects individuals over the age of 65" .
 
-ex:InternationalExpositionOf1889
-  a schema:Event ;
-  rdfs:label "International Exposition of 1889" ;
-  schema:location ex:Paris ;
-  schema:startDate "1889"^^xsd:date ;
-  schema:endDate "1889"^^xsd:date .
+example:Dementia
+  a fhir:Condition ;
+  rdfs:label "Dementia" ;
+  fhir:code icd10:F00.9 .
 
-ex:FrenchGovernment
-  a schema:Government ;
-  rdfs:label "French Government" ;
-  schema:event ex:InternationalExpositionOf1889 .
+example:MediterraneanDiet
+  a rdfs:Class ;
+  rdfs:label "Mediterranean diet" ;
+  rdfs:comment "May protect against Alzheimer's disease" .
 
-ex:FrenchRevolution
-  a schema:Event ;
-  rdfs:label "French Revolution" ;
-  schema:centenary ex:InternationalExpositionOf1889 .
+example:MINDiet
+  a rdfs:Class ;
+  rdfs:label "MIND diet" ;
+  rdfs:comment "May protect against Alzheimer's disease" .
 
-ex:CentennialCommittee
-  a schema:Organization ;
-  rdfs:label "Centennial Committee" ;
-  schema:event ex:InternationalExpositionOf1889 .
+example:InflammatorySaturatedFats
+  a rdfs:Class ;
+  rdfs:label "Inflammatory saturated fats" ;
+  rdfs:comment "Lower intake may be beneficial" .
+
+example:Omega3s
+  a rdfs:Class ;
+  rdfs:label "Omega-3s" ;
+  rdfs:comment "Higher consumption may be beneficial" .
+
+example:Antioxidants
+  a rdfs:Class ;
+  rdfs:label "Antioxidants" ;
+  rdfs:comment "Counteract free radical damage, possibly mitigating disease effects" .
+
+example:OxidativeStress
+  a rdfs:Class ;
+  rdfs:label "Oxidative stress" ;
+  rdfs:comment "Associated with Alzheimer's disease" .
+
+example:FreeRadicalDamage
+  a rdfs:Class ;
+  rdfs:label "Free radical damage" ;
+  rdfs:comment "Counteracted by antioxidants" .
+
+example:AlzheimersDisease
+  fhir:associatedWith example:AgeOver65 ;
+  fhir:associatedWith example:Dementia ;
+  fhir:mayBeProtectedBy example:MediterraneanDiet ;
+  fhir:mayBeProtectedBy example:MINDiet ;
+  fhir:associatedWith example:InflammatorySaturatedFats ;
+  fhir:associatedWith example:Omega3s ;
+  fhir:associatedWith example:Antioxidants ;
+  fhir:associatedWith example:OxidativeStress ;
+  fhir:associatedWith example:FreeRadicalDamage .
 ```
 
 Note:
 
-* I used `example.org` as the namespace for custom concepts and relations.
-* I used `schema.org` for common concepts like `Landmark`, `Person`, `City`, `Event`, `Government`, and `Organization`.
-* I used `xsd` for data types like `date`.
-* I used `rdfs` for RDF schema concepts like `label`.
-* I used `rdf` for RDF concepts like `type`.
+* `example:` prefix is used for concepts defined in the example.org namespace.
+* `icd10:` prefix is used for ICD-10 codes.
+* `fhir:` prefix is used for FHIR concepts and relations.
+* `xsd:` prefix is used for XML schema data types.
+* `rdf:` and `rdfs:` prefixes are used for RDF and RDFS concepts and relations.
 
-Please note that this is one possible representation, and there are many ways to model the same data.
+This representation defines the concepts mentioned in the text, including Alzheimer's disease, degenerative brain disorder, age over 65, dementia, Mediterranean diet, MIND diet, inflammatory saturated fats, omega-3s, antioxidants, oxidative stress, and free radical damage. The relations between these concepts are also defined, including associations, protections, and counteractions.

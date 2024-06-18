@@ -3,6 +3,7 @@ import streamlit as st
 import streamlit_agraph
 from streamlit_agraph import Config
 import requests
+from icd10_validator import load_icd10_codes, process_turtle_format, write_icd10_codes_to_file, load_icd10_codes_from_file
 
 # Ensure an event loop is created before importing llamaapi
 loop = get_or_create_event_loop()
@@ -15,6 +16,15 @@ answer = ""
 api_request_json = {}
 answer_content = ""
 response = None
+is_fhir = False
+
+# Already used code to create icd10_codes.py with map of the deseases and their icd10 code
+# Load ICD-10 codes from the XML file 
+# icd10_codes = load_icd10_codes()
+
+# st.write(icd10_codes) 
+# write_icd10_codes_to_file(icd10_codes)
+
 
 st.set_page_config(
     page_title="Text to KG",
@@ -77,6 +87,7 @@ if st.session_state.page_num == 1:
                     ]
                 }
             elif schema_options == "FHIR":
+                is_fhir = True
                 api_request_json = {
                     "model": "llama3-70b",
                     "max_tokens": 10000,
@@ -134,6 +145,23 @@ if st.session_state.page_num == 1:
                 st.session_state.edges = None
             else:
                 st.write("<font color='red'>Couldn't fix it</font>", unsafe_allow_html=True)
+
+        if is_fhir:
+            # Load the dictionary from the file
+            icd10_codes_map = load_icd10_codes_from_file()
+            # print(f"is_fhir: {is_fhir}")
+            # st.write(f"icd10_codes_map: {icd10_codes_map}")
+
+            # Process Turtle format and get results
+            results = process_turtle_format(answer, icd10_codes_map)
+            # st.write(f"results: {results}")
+    
+            # Print the results
+            for label, correct_code in results:
+                if correct_code != 'Code not found':
+                    print(f"Label: {label}, Correct Code: {correct_code}")
+                    st.write(f"Label: {label}, Correct Code: {correct_code}")
+
     elif get_answer_btn and not user_text:
         st.write("<font color='red'>Please enter some text.</font>", unsafe_allow_html=True)
         
