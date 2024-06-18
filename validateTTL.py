@@ -66,6 +66,12 @@ def fix_turtle_syntax(file_path):
 # Usage
 #if(not is_ok):
 # fix_turtle_syntax('test.ttl')
+#if(not is_ok):
+# fix_turtle_syntax('test.ttl')
+
+xsd_text = 'this a text \n nvdsj schema:mortalityRate "6"^^xsd:integer ;\n schema:rank xsd:integer 3 \n jfjfd f'
+xsd_text = re.sub(r'(xsd:integer\s)([0-9]+)', r'"\2"^^\1', xsd_text)
+print(xsd_text)
 
 xsd_text = 'this a text \n nvdsj schema:mortalityRate "6"^^xsd:integer ;\n schema:rank xsd:integer 3 \n jfjfd f'
 xsd_text = re.sub(r'(xsd:integer\s)([0-9]+)', r'"\2"^^\1', xsd_text)
