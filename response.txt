@@ -8,53 +8,71 @@ Here is the representation of the concepts and relations between them in Turtle 
 @prefix example: <http://example.org/> .
 @prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:Depression
-  a rdfs:Class ;
-  rdfs:label "Depression" ;
-  rdfs:comment "A mental health disorder characterized by feelings of sadness and loss of interest in activities" ;
-  fhir:code [ fhir:system "http://hl7.org/fhir/sid/icd-10-cm" ; fhir:code "F33" ] .
+example:Michigan_Department_of_Health_and_Human_Services
+  a fhir:Organization ;
+  rdfs:label "Michigan Department of Health and Human Services" .
 
-example:MemoryLoss
-  a rdfs:Class ;
-  rdfs:label "Memory Loss" ;
-  rdfs:comment "A condition characterized by the inability to recall past events or learn new information" ;
-  fhir:code [ fhir:system "http://hl7.org/fhir/sid/icd-10-cm" ; fhir:code "R41.3" ] .
+example:US_Centers_for_Disease_Control_and_Prevention
+  a fhir:Organization ;
+  rdfs:label "US Centers for Disease Control and Prevention" .
 
-example:BidirectionalRelationship
-  a rdf:Property ;
-  rdfs:label "Bidirectional Relationship" ;
-  rdfs:comment "A relationship where two concepts influence each other" .
+example:Michigan
+  a fhir:Location ;
+  rdfs:label "Michigan" .
 
-example:Depression example:hasEffect example:MemoryLoss .
-example:MemoryLoss example:hasEffect example:Depression .
+example:Avian_Influenza
+  a fhir:Condition ;
+  rdfs:label "Avian Influenza" ;
+  icd10:code "J09.X" .
 
-example:hasEffect
-  a rdf:Property ;
-  rdfs:label "Has Effect" ;
-  rdfs:comment "A relationship where one concept affects another" .
+example:Bird_Flu
+  a fhir:Condition ;
+  rdfs:label "Bird Flu" ;
+  owl:sameAs example:Avian_Influenza .
 
-example:AcceleratedMemoryLoss
-  a rdf:Property ;
-  rdfs:label "Accelerated Memory Loss" ;
-  rdfs:comment "A condition where memory loss is accelerated" ;
-  example:hasEffect example:Depression .
+example:H5_Influenza
+  a fhir:Condition ;
+  rdfs:label "H5 Influenza" ;
+  owl:sameAs example:Avian_Influenza .
 
-example:HigherLevelOfDepressiveSymptoms
-  a rdf:Property ;
-  rdfs:label "Higher Level of Depressive Symptoms" ;
-  rdfs:comment "A condition where depressive symptoms are exacerbated" ;
-  example:hasEffect example:MemoryLoss .
+example:Farm_Worker
+  a fhir:Practitioner ;
+  rdfs:label "Farm Worker" .
+
+example:Case_Report
+  a fhir:DiagnosticReport ;
+  rdfs:label "Case Report" ;
+  fhir:subject example:Farm_Worker ;
+  fhir:result example:Avian_Influenza .
+
+example:Ongoing_Outbreak
+  a fhir:EpisodeOfCare ;
+  rdfs:label "Ongoing Outbreak" ;
+  fhir:condition example:Avian_Influenza ;
+  fhir:location example:Michigan .
+
+example:Health_Officials
+  a fhir:Practitioner ;
+  rdfs:label "Health Officials" .
+
+example:Low_Risk
+  a fhir:RiskAssessment ;
+  rdfs:label "Low Risk" ;
+  fhir:subject example:General_Public ;
+  fhir:assessment example:Avian_Influenza .
+
+example:General_Public
+  a fhir:Group ;
+  rdfs:label "General Public" .
 ```
 
-In this representation, we have defined the following concepts:
+Note:
 
-* `example:Depression`: a class representing the concept of depression
-* `example:MemoryLoss`: a class representing the concept of memory loss
-* `example:BidirectionalRelationship`: a property representing the bidirectional relationship between depression and memory loss
-* `example:hasEffect`: a property representing the effect of one concept on another
-* `example:AcceleratedMemoryLoss`: a property representing the accelerated memory loss effect of depression
-* `example:HigherLevelOfDepressiveSymptoms`: a property representing the higher level of depressive symptoms effect of memory loss
+* I used the `example.org` namespace for the concepts, as per your request.
+* I used the `icd10` namespace to map the concepts to ICD-10 codes.
+* I used the `fhir` namespace to represent the concepts using FHIR resources.
+* I used the `xsd` namespace to represent the data types.
+* I used the `rdfs` namespace to represent the relationships between the concepts.
+* I used the `owl` namespace to represent the equivalence relationships between the concepts.
 
-We have also defined the relationships between these concepts using the `example:hasEffect` property. The `example:BidirectionalRelationship` property is used to represent the bidirectional relationship between depression and memory loss.
-
-The `fhir:code` properties are used to map the concepts to ICD-10 codes.
+Please note that this is just one possible way to represent the concepts and relations between them in Turtle format. There may be other valid representations depending on the specific requirements and context.
