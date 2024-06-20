@@ -3,7 +3,7 @@ import streamlit as st
 import streamlit_agraph
 from streamlit_agraph import Config
 import requests
-from icd10_validator import load_icd10_codes, process_turtle_format, write_icd10_codes_to_file, load_icd10_codes_from_file
+from icd10_validator import load_icd10_codes, write_icd10_codes_to_file, load_icd10_codes_from_file, process_turtle_format, update_and_clean_turtle, fix_turtle_format
 
 # Ensure an event loop is created before importing llamaapi
 loop = get_or_create_event_loop()
@@ -17,6 +17,7 @@ api_request_json = {}
 answer_content = ""
 response = None
 is_fhir = False
+couldnt_fix = False
 
 # Already used code to create icd10_codes.py with map of the deseases and their icd10 code
 # Load ICD-10 codes from the XML file 
@@ -78,6 +79,7 @@ if st.session_state.page_num == 1:
 
         if chat_bot_is_on:
             if schema_options == "schema.org":
+                is_fhir = False
                 api_request_json = {
                     "model": "llama3-70b",
                     "max_tokens": 10000,
@@ -105,8 +107,6 @@ if st.session_state.page_num == 1:
                     break
                 except requests.exceptions.JSONDecodeError as e:
                     print(f"Error: {e}")
-                    print()
-                    print(response.text)
 
             if check_answer(answer_content):
                 save_answer_to_file(answer_content, 'response.txt')
@@ -123,8 +123,9 @@ if st.session_state.page_num == 1:
         if is_valid_ttl:
             st.session_state.is_valid_turtle = True
             st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
-            with st.expander("View turtle"):
-                st.code(answer, language="turtle")
+            if is_fhir == False:
+                with st.expander("View turtle"):
+                    st.code(answer, language="turtle")
             st.session_state.answer = answer
             st.session_state.nodes = None
             st.session_state.edges = None
@@ -138,29 +139,40 @@ if st.session_state.page_num == 1:
             if is_valid_ttl:
                 st.session_state.is_valid_turtle = True
                 st.write(f"<font color='green'>{is_valid_string}</font>", unsafe_allow_html=True)
-                with st.expander("View turtle"):
-                    st.code(answer, language="turtle")
+                if is_fhir == False:
+                    with st.expander("View turtle"):
+                        st.code(answer, language="turtle")
                 st.session_state.answer = answer
                 st.session_state.nodes = None
                 st.session_state.edges = None
             else:
                 st.write("<font color='red'>Couldn't fix it</font>", unsafe_allow_html=True)
+                couldnt_fix = True
 
-        if is_fhir:
+        if is_fhir and couldnt_fix == False:
+
             # Load the dictionary from the file
             icd10_codes_map = load_icd10_codes_from_file()
-            # print(f"is_fhir: {is_fhir}")
-            # st.write(f"icd10_codes_map: {icd10_codes_map}")
 
             # Process Turtle format and get results
             results = process_turtle_format(answer, icd10_codes_map)
-            # st.write(f"results: {results}")
-    
-            # Print the results
-            for label, correct_code in results:
-                if correct_code != 'Code not found':
-                    print(f"Label: {label}, Correct Code: {correct_code}")
-                    st.write(f"Label: {label}, Correct Code: {correct_code}")
+
+            # Update the Turtle data with the ICD-10 codes
+            updated_turtle = update_and_clean_turtle(answer, results)
+            # fixes ; and .
+            updated_turtle = fix_turtle_format(updated_turtle)
+
+            # Display the updated Turtle data
+            with st.expander("View turtle"):
+                st.code(updated_turtle, language="turtle")
+
+            # Update the answer variable
+            answer = updated_turtle
+            value, str = is_valid_turtle(answer)
+            # print(value)
+
+            if value == True:
+                st.session_state.answer = answer
 
     elif get_answer_btn and not user_text:
         st.write("<font color='red'>Please enter some text.</font>", unsafe_allow_html=True)

@@ -8,80 +8,53 @@ Here is the representation of the concepts and relations between them in Turtle 
 @prefix example: <http://example.org/> .
 @prefix icd10: <http://hl7.org/fhir/sid/icd-10-cm/> .
 
-example:AlzheimersDisease
-  a fhir:Condition ;
-  rdfs:label "Alzheimer's disease" ;
-  rdfs:comment "A degenerative brain disorder" ;
-  fhir:code icd10:G30.9 .
-
-example:DegenerativeBrainDisorder
+example:Depression
   a rdfs:Class ;
-  rdfs:label "Degenerative brain disorder" ;
-  rdfs:subClassOf fhir:Condition .
+  rdfs:label "Depression" ;
+  rdfs:comment "A mental health disorder characterized by feelings of sadness and loss of interest in activities" ;
+  fhir:code [ fhir:system "http://hl7.org/fhir/sid/icd-10-cm" ; fhir:code "F33" ] .
 
-example:AgeOver65
+example:MemoryLoss
   a rdfs:Class ;
-  rdfs:label "Age over 65" ;
-  rdfs:comment "Primarily affects individuals over the age of 65" .
+  rdfs:label "Memory Loss" ;
+  rdfs:comment "A condition characterized by the inability to recall past events or learn new information" ;
+  fhir:code [ fhir:system "http://hl7.org/fhir/sid/icd-10-cm" ; fhir:code "R41.3" ] .
 
-example:Dementia
-  a fhir:Condition ;
-  rdfs:label "Dementia" ;
-  fhir:code icd10:F00.9 .
+example:BidirectionalRelationship
+  a rdf:Property ;
+  rdfs:label "Bidirectional Relationship" ;
+  rdfs:comment "A relationship where two concepts influence each other" .
 
-example:MediterraneanDiet
-  a rdfs:Class ;
-  rdfs:label "Mediterranean diet" ;
-  rdfs:comment "May protect against Alzheimer's disease" .
+example:Depression example:hasEffect example:MemoryLoss .
+example:MemoryLoss example:hasEffect example:Depression .
 
-example:MINDiet
-  a rdfs:Class ;
-  rdfs:label "MIND diet" ;
-  rdfs:comment "May protect against Alzheimer's disease" .
+example:hasEffect
+  a rdf:Property ;
+  rdfs:label "Has Effect" ;
+  rdfs:comment "A relationship where one concept affects another" .
 
-example:InflammatorySaturatedFats
-  a rdfs:Class ;
-  rdfs:label "Inflammatory saturated fats" ;
-  rdfs:comment "Lower intake may be beneficial" .
+example:AcceleratedMemoryLoss
+  a rdf:Property ;
+  rdfs:label "Accelerated Memory Loss" ;
+  rdfs:comment "A condition where memory loss is accelerated" ;
+  example:hasEffect example:Depression .
 
-example:Omega3s
-  a rdfs:Class ;
-  rdfs:label "Omega-3s" ;
-  rdfs:comment "Higher consumption may be beneficial" .
-
-example:Antioxidants
-  a rdfs:Class ;
-  rdfs:label "Antioxidants" ;
-  rdfs:comment "Counteract free radical damage, possibly mitigating disease effects" .
-
-example:OxidativeStress
-  a rdfs:Class ;
-  rdfs:label "Oxidative stress" ;
-  rdfs:comment "Associated with Alzheimer's disease" .
-
-example:FreeRadicalDamage
-  a rdfs:Class ;
-  rdfs:label "Free radical damage" ;
-  rdfs:comment "Counteracted by antioxidants" .
-
-example:AlzheimersDisease
-  fhir:associatedWith example:AgeOver65 ;
-  fhir:associatedWith example:Dementia ;
-  fhir:mayBeProtectedBy example:MediterraneanDiet ;
-  fhir:mayBeProtectedBy example:MINDiet ;
-  fhir:associatedWith example:InflammatorySaturatedFats ;
-  fhir:associatedWith example:Omega3s ;
-  fhir:associatedWith example:Antioxidants ;
-  fhir:associatedWith example:OxidativeStress ;
-  fhir:associatedWith example:FreeRadicalDamage .
+example:HigherLevelOfDepressiveSymptoms
+  a rdf:Property ;
+  rdfs:label "Higher Level of Depressive Symptoms" ;
+  rdfs:comment "A condition where depressive symptoms are exacerbated" ;
+  example:hasEffect example:MemoryLoss .
 ```
 
-Note:
+In this representation, we have defined the following concepts:
 
-* `example:` prefix is used for concepts defined in the example.org namespace.
-* `icd10:` prefix is used for ICD-10 codes.
-* `fhir:` prefix is used for FHIR concepts and relations.
-* `xsd:` prefix is used for XML schema data types.
-* `rdf:` and `rdfs:` prefixes are used for RDF and RDFS concepts and relations.
+* `example:Depression`: a class representing the concept of depression
+* `example:MemoryLoss`: a class representing the concept of memory loss
+* `example:BidirectionalRelationship`: a property representing the bidirectional relationship between depression and memory loss
+* `example:hasEffect`: a property representing the effect of one concept on another
+* `example:AcceleratedMemoryLoss`: a property representing the accelerated memory loss effect of depression
+* `example:HigherLevelOfDepressiveSymptoms`: a property representing the higher level of depressive symptoms effect of memory loss
 
-This representation defines the concepts mentioned in the text, including Alzheimer's disease, degenerative brain disorder, age over 65, dementia, Mediterranean diet, MIND diet, inflammatory saturated fats, omega-3s, antioxidants, oxidative stress, and free radical damage. The relations between these concepts are also defined, including associations, protections, and counteractions.
+We have also defined the relationships between these concepts using the `example:hasEffect` property. The `example:BidirectionalRelationship` property is used to represent the bidirectional relationship between depression and memory loss.
+
+The `fhir:code` properties are used to map the concepts to ICD-10 codes.
